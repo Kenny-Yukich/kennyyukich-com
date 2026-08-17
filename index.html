@@ -10,6 +10,10 @@
 <meta property="og:description" content="Copilot adoption, Power Platform agents, and production automation, deployed on a shop floor.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://kennyyukich.com">
+<meta property="og:image" content="https://kennyyukich.com/img/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -125,6 +129,25 @@ a:focus-visible{outline:2px solid var(--amber);outline-offset:4px;border-radius:
 .rivet.tr{top:9px;right:9px}
 .rivet.bl{bottom:9px;left:9px}
 .rivet.br{bottom:9px;right:9px}
+
+.plate-top{
+  display:grid;
+  grid-template-columns:150px 1fr;
+  gap:0 28px;
+  align-items:start;
+}
+.portrait{
+  width:150px;
+  height:150px;
+  display:block;
+  border:1px solid var(--ink);
+  object-fit:cover;
+  background:var(--field);
+}
+@media (max-width:560px){
+  .plate-top{grid-template-columns:1fr;gap:20px 0}
+  .portrait{width:118px;height:118px}
+}
 
 .plate-name{
   font-family:var(--display);
@@ -307,10 +330,19 @@ a:focus-visible{outline:2px solid var(--amber);outline-offset:4px;border-radius:
     <span class="rivet tl"></span><span class="rivet tr"></span>
     <span class="rivet bl"></span><span class="rivet br"></span>
 
-    <h1 class="plate-name reveal" style="--d:.05s">Kenny Yukich</h1>
-    <p class="plate-line reveal" style="--d:.16s">I build AI systems that manufacturing people actually use.</p>
+    <div class="plate-top">
+      <img class="portrait reveal" style="--d:.05s"
+           src="img/portrait.jpg"
+           srcset="img/portrait.jpg 1x, img/portrait@2x.jpg 2x"
+           width="150" height="150" loading="eager" decoding="async"
+           alt="Kenny Yukich">
+      <div>
+        <h1 class="plate-name reveal" style="--d:.12s">Kenny Yukich</h1>
+        <p class="plate-line reveal" style="--d:.22s">I build AI systems that manufacturing people actually use.</p>
+      </div>
+    </div>
 
-    <div class="fields reveal" style="--d:.27s">
+    <div class="fields reveal" style="--d:.33s">
       <div><span class="label">Role</span><span class="field-v">IT AI Productivity Coordinator</span></div>
       <div><span class="label">Sector</span><span class="field-v">Walking-floor trailer mfg.</span></div>
       <div><span class="label">Based</span><span class="field-v">Central Oregon</span></div>
