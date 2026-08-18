@@ -405,6 +405,40 @@ body.loading{overflow:hidden}
 .comp p{margin:0;font-size:14px;line-height:1.55;color:var(--steel);max-width:none}
 @media (max-width:640px){.comps{grid-template-columns:1fr}}
 
+/* ---------- field reports ---------- */
+
+.reports{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.report{
+  background:var(--plate);
+  border:1px solid var(--line);
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin:0;
+}
+.report .src{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--blue);
+}
+.report p{
+  margin:0;
+  font-size:15px;
+  line-height:1.6;
+  color:var(--ink);
+  max-width:none;
+}
+.report p::before{content:"\201C"}
+.report p::after{content:"\201D"}
+@media (max-width:640px){.reports{grid-template-columns:1fr}}
+
 /* ---------- record ---------- */
 
 .recgrid{
@@ -429,6 +463,13 @@ body.loading{overflow:hidden}
   flex-direction:column;
   gap:10px;
 }
+.talk{
+  margin:0 0 6px;
+  font-size:17px;
+  line-height:1.6;
+  color:var(--steel);
+  max-width:52ch;
+}
 .mail{
   font-family:var(--display);
   font-weight:700;
@@ -438,7 +479,14 @@ body.loading{overflow:hidden}
   display:inline-block;
   width:fit-content;
 }
-.elsewhere{font-family:var(--mono);font-size:13px;display:flex;gap:22px;flex-wrap:wrap}
+.elsewhere{font-family:var(--mono);font-size:13px;display:flex;gap:22px;flex-wrap:wrap;align-items:center}
+.resume-btn{
+  border:1px solid var(--blue);
+  background:color-mix(in srgb, var(--blue) 8%, transparent);
+  padding:9px 16px;
+  font-weight:700;
+}
+.resume-btn:hover{background:var(--blue);color:var(--sheet);border-bottom-color:var(--blue)}
 .elsewhere a{border-bottom:1px solid var(--blue)}
 
 .colophon{
@@ -477,6 +525,7 @@ body.loading{overflow:hidden}
       <a href="#toolkit" class="opt">Toolkit</a>
       <a href="#journey" class="opt">Journey</a>
       <a href="#work" class="opt">Work</a>
+      <a href="#reports" class="opt">Reports</a>
       <a href="#record" class="opt">Record</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -635,25 +684,67 @@ body.loading{overflow:hidden}
     </div>
   </section>
 
-  <section class="section" id="record">
+  <section class="section" id="reports">
     <div class="sechead reveal">
       <span class="sectag">05</span>
+      <span class="secname">Field Reports</span>
+    </div>
+
+    <div class="reports">
+      <figure class="report reveal">
+        <span class="src">Kaizen Coach</span>
+        <p>I worked with your Kaizen Coach for hours yesterday fixing the parameters for EU MRP and I am very pleased with the final result.</p>
+      </figure>
+      <figure class="report reveal">
+        <span class="src">Serial Plate Generator</span>
+        <p>We would type out one plate at a time, place 28 plates on one sheet, and print it twice. With the new sized plates, serial number generator, and script, we probably save well over an hour of work per 56 plates.</p>
+      </figure>
+      <figure class="report reveal">
+        <span class="src">Safety Assistant</span>
+        <p>The Safety Assistant helped me find the information I needed without interrupting someone else. That's a big win during a busy day.</p>
+      </figure>
+      <figure class="report reveal">
+        <span class="src">Bunker Lookup Agent</span>
+        <p>What used to take several phone calls and a lot of searching now takes a few minutes. The Bunker Lookup Agent has made customer support much faster.</p>
+      </figure>
+      <figure class="report reveal">
+        <span class="src">CertTracker</span>
+        <p>Before CertTracker, keeping track of certifications was mostly manual. Now I can find what I need almost instantly.</p>
+      </figure>
+      <figure class="report reveal">
+        <span class="src">Copilot Training</span>
+        <p>The training focused on practical examples instead of AI buzzwords, which made it easy to apply to my job.</p>
+      </figure>
+      <figure class="report reveal">
+        <span class="src">Adoption Program</span>
+        <p>Kenny's approach focused on solving actual business problems rather than implementing technology for technology's sake.</p>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="record">
+    <div class="sechead reveal">
+      <span class="sectag">06</span>
       <span class="secname">Record</span>
     </div>
 
     <div class="recgrid reveal">
-      <div>2026</div><div>Second place, VSLive Microsoft HQ Hackathon for Developers</div>
+      <div>2026</div><div>Second place, <a href="https://vslive.com/events/microsofthq-2026/hackathon.aspx">VSLive Microsoft HQ Hackathon for Developers</a> — built an <a href="https://github.com/Kenny-Yukich/ap-invoice-intake-agent">AP invoice intake agent</a></div>
       <div>2026</div><div>Microsoft SMB Workflows Design Partner Program</div>
-      <div>CERT</div><div>Microsoft 365 Generative AI · AI Agent Builder Associate (AB-620), September 2026</div>
+      <div>2026</div><div>Microsoft Teams SMB Customer Advisory Board</div>
+      <div>CERT</div><div>Microsoft 365 Generative AI · AI Agent Builder Associate (AB-620), expected September 2026</div>
       <div>STACK</div><div>Power Platform · Copilot Studio · Python · Azure · Claude &amp; OpenAI APIs</div>
       <div>EDU</div><div>B.S. General Science, Oregon State University</div>
-      <div>BEFORE</div><div>300+ podcasts hosted; community lead for a consumer app at six-figure scale</div>
+      <div>BEFORE</div><div>Hosted STEPN DAILY — 300+ episodes covering the STEPN ($GMT) web3 ecosystem — and grew a 14,000-follower audience on X as <a href="https://x.com/Ktrain_USA">@Ktrain_USA</a></div>
     </div>
   </section>
 
   <section class="contact reveal" id="contact">
+    <p class="talk">Talk to me about Copilot adoption, production AI agents, or getting a shop floor to actually use new tools.</p>
     <a class="mail" href="mailto:kenny@kennyyukich.com">kenny@kennyyukich.com</a>
     <div class="elsewhere">
+      <!-- Add resume.pdf to the repo root, then this link goes live as-is -->
+      <a class="resume-btn" href="resume.pdf" download>Download resume</a>
       <a href="https://www.linkedin.com/in/kenny-yukich-4092521a8/">LinkedIn</a>
       <a href="https://github.com/Kenny-Yukich">GitHub</a>
     </div>
@@ -681,16 +772,16 @@ body.loading{overflow:hidden}
     var pct = 0;
     var tick = setInterval(function(){
       /* ease off as it approaches 100 so the finish feels deliberate */
-      var step = pct < 70 ? 2 + Math.random() * 5 : 1 + Math.random() * 2;
+      var step = pct < 70 ? 8 + Math.random() * 10 : 4 + Math.random() * 6;
       pct = Math.min(100, pct + Math.round(step));
       pctEl.textContent = pct;
       if (pct >= 100) {
         clearInterval(tick);
-        setTimeout(finishLoad, 350);
+        setTimeout(finishLoad, 250);
       }
-    }, 80);
+    }, 65);
     /* hard fallback so a slow tab never gets stuck behind the loader */
-    setTimeout(finishLoad, 4500);
+    setTimeout(finishLoad, 2500);
   }
 
   /* smooth scroll — optional enhancement, page works fine without it */
