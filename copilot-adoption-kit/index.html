@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Copilot Adoption Kit — Kenny Yukich</title>
+<meta name="description" content="A practical, field-tested resource hub for Microsoft 365 Copilot adoption: rollout planning, prompts, measurement, training, governance, and reporting.">
+
+<meta property="og:title" content="Copilot Adoption Kit — Kenny Yukich">
+<meta property="og:description" content="A practical 90-day system for turning Microsoft 365 Copilot licenses into durable workplace habits.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kennyyukich.com/copilot-adoption-kit/">
+<meta property="og:image" content="https://kennyyukich.com/img/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/img/portrait.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Archivo+Expanded:wght@600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-bar">
+  <div class="site-bar__inner">
+    <a class="brand" href="/">Kenny Yukich</a>
+    <span class="site-bar__divider" aria-hidden="true"></span>
+    <a class="product-name" href="#top">Copilot Adoption Kit</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="resource-nav">Menu</button>
+    <nav class="resource-nav" id="resource-nav" aria-label="Resource navigation">
+      <a href="#playbook">Playbook</a>
+      <a href="#prompts">Prompts</a>
+      <a href="#measurement">Measurement</a>
+      <a href="#training">Training</a>
+      <a href="#governance">Governance</a>
+      <a href="#downloads">Downloads</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero shell" id="top" aria-labelledby="page-title">
+    <div class="hero-plate">
+      <div class="hero-plate__rail" aria-hidden="true">
+        <span>FIELD SYSTEM</span>
+        <span>REV 01</span>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow">Microsoft 365 Copilot / Adoption Engineering</p>
+        <h1 id="page-title">Copilot<br>Adoption Kit</h1>
+        <p class="hero-lede">A practical operating system for turning assigned licenses into durable habits—built around task fit, credible measurement, useful training, and governance people can understand.</p>
+        <div class="hero-actions">
+          <a class="button button--primary" href="#playbook">Start with the playbook</a>
+          <a class="button button--secondary" href="https://github.com/Kenny-Yukich/Copilot-Adoption-Campaign" target="_blank" rel="noreferrer">View source on GitHub</a>
+        </div>
+      </div>
+
+      <aside class="hero-instrument" aria-label="Kit overview">
+        <div class="instrument-head">
+          <span>System overview</span>
+          <span class="status"><i aria-hidden="true"></i> Public</span>
+        </div>
+        <dl class="readouts">
+          <div><dt>Rollout window</dt><dd>90 <small>days</small></dd></div>
+          <div><dt>Prompt library</dt><dd id="hero-prompt-count">33 <small>prompts</small></dd></div>
+          <div><dt>Core signals</dt><dd>04 <small>weekly</small></dd></div>
+          <div><dt>Dependencies</dt><dd>00 <small>frameworks</small></dd></div>
+        </dl>
+        <p class="instrument-note">Designed for small teams and real operating constraints. All published usage examples are synthetic.</p>
+      </aside>
+    </div>
+
+    <nav class="module-index" aria-label="Page modules">
+      <a href="#playbook"><span>01</span>90-day playbook</a>
+      <a href="#prompts"><span>02</span>Prompt library</a>
+      <a href="#measurement"><span>03</span>Measurement</a>
+      <a href="#training"><span>04</span>Training</a>
+      <a href="#governance"><span>05</span>Governance</a>
+      <a href="#downloads"><span>06</span>Downloads</a>
+    </nav>
+  </section>
+
+  <section class="module shell" id="playbook" aria-labelledby="playbook-title">
+    <header class="module-head">
+      <div><span class="module-number">01</span><p class="eyebrow">Sequence before sophistication</p></div>
+      <div>
+        <h2 id="playbook-title">90-Day Adoption Playbook</h2>
+        <p>Four operating phases, each with one job. Select a phase to see its actions, proof points, and failure mode.</p>
+      </div>
+    </header>
+
+    <div class="phase-system">
+      <div class="phase-tabs" role="tablist" aria-label="Adoption phases">
+        <button type="button" role="tab" id="phase-tab-0" aria-controls="phase-panel-0" aria-selected="true" data-phase="0">
+          <span class="phase-code">P0</span><strong>Prepare</strong><small>Before launch</small>
+        </button>
+        <button type="button" role="tab" id="phase-tab-1" aria-controls="phase-panel-1" aria-selected="false" data-phase="1" tabindex="-1">
+          <span class="phase-code">P1</span><strong>Land it</strong><small>Weeks 1–4</small>
+        </button>
+        <button type="button" role="tab" id="phase-tab-2" aria-controls="phase-panel-2" aria-selected="false" data-phase="2" tabindex="-1">
+          <span class="phase-code">P2</span><strong>Make it stick</strong><small>Weeks 5–8</small>
+        </button>
+        <button type="button" role="tab" id="phase-tab-3" aria-controls="phase-panel-3" aria-selected="false" data-phase="3" tabindex="-1">
+          <span class="phase-code">P3</span><strong>Institutionalize</strong><small>Weeks 9–12</small>
+        </button>
+      </div>
+
+      <div class="phase-panels">
+        <article class="phase-panel" id="phase-panel-0" role="tabpanel" aria-labelledby="phase-tab-0" data-panel="0">
+          <div class="phase-summary"><span>Objective</span><h3>Build the conditions for a credible launch.</h3><p>Pick people by task fit, establish the measurement denominator, capture before-metrics, and answer governance questions before they arrive.</p></div>
+          <ol class="action-list">
+            <li><span>01</span><div><strong>Baseline the work</strong><p>Survey recurring tasks and capture 3–5 stopwatch examples.</p></div></li>
+            <li><span>02</span><div><strong>Select for task fit</strong><p>Prioritize document, email, meeting, and reconciliation-heavy roles.</p></div></li>
+            <li><span>03</span><div><strong>Lock definitions</strong><p>Write down the denominator, exclusions, activity window, and source.</p></div></li>
+            <li><span>04</span><div><strong>Clear governance</strong><p>Document permissions, logging, retention, and acceptable use.</p></div></li>
+          </ol>
+          <div class="phase-proof"><span>Exit signal</span><strong>A named pilot cohort, a written measurement contract, and no unanswered first-week governance question.</strong></div>
+        </article>
+
+        <article class="phase-panel" id="phase-panel-1" role="tabpanel" aria-labelledby="phase-tab-1" data-panel="1" hidden>
+          <div class="phase-summary"><span>Objective</span><h3>Create useful first wins and publish the truth early.</h3><p>Train by department, make the first attempt succeed, and report the initial numbers even when they are unimpressive.</p></div>
+          <ol class="action-list">
+            <li><span>W1</span><div><strong>Launch by department</strong><p>Send one clear announcement and schedule focused 30-minute sessions.</p></div></li>
+            <li><span>W2</span><div><strong>Train real tasks</strong><p>Each participant leaves with one successful result on their own work.</p></div></li>
+            <li><span>W3</span><div><strong>Find peer proof</strong><p>Identify champions from behavior and participation—not enthusiasm alone.</p></div></li>
+            <li><span>W4</span><div><strong>Publish the library</strong><p>Release department prompts and start the first dormant-user check-in.</p></div></li>
+          </ol>
+          <div class="phase-proof"><span>Exit signal</span><strong>A repeatable weekly report, visible peer examples, and an honest baseline everyone recognizes.</strong></div>
+        </article>
+
+        <article class="phase-panel" id="phase-panel-2" role="tabpanel" aria-labelledby="phase-tab-2" data-panel="2" hidden>
+          <div class="phase-summary"><span>Objective</span><h3>Convert early experiments into repeated behavior.</h3><p>Move from generic training to task-specific support, deepen the prompt library, and act on dormant licenses without drama.</p></div>
+          <ol class="action-list">
+            <li><span>05</span><div><strong>Run office hours</strong><p>Specific problems now outperform another broad curriculum.</p></div></li>
+            <li><span>06</span><div><strong>Create a challenge</strong><p>Use a low-stakes, two-week campaign to activate the passive middle.</p></div></li>
+            <li><span>07</span><div><strong>Build departmental depth</strong><p>Turn successful prompts into named, reusable workflows.</p></div></li>
+            <li><span>08</span><div><strong>Reallocate deliberately</strong><p>Check in at two dormant weeks; reclaim only after a fair support cycle.</p></div></li>
+          </ol>
+          <div class="phase-proof"><span>Exit signal</span><strong>Usage is concentrated around named weekly tasks—not novelty—and dormant licenses have an owner action.</strong></div>
+        </article>
+
+        <article class="phase-panel" id="phase-panel-3" role="tabpanel" aria-labelledby="phase-tab-3" data-panel="3" hidden>
+          <div class="phase-summary"><span>Objective</span><h3>Turn the rollout into an operating capability.</h3><p>Publish the 90-day impact, assign departmental ownership, and graduate repeated prompts into templates, flows, or agents.</p></div>
+          <ol class="action-list">
+            <li><span>09</span><div><strong>Review what stuck</strong><p>Name the workflows that survived and the ones that did not.</p></div></li>
+            <li><span>10</span><div><strong>Automate repetition</strong><p>Prompts used every week should become more durable systems.</p></div></li>
+            <li><span>11</span><div><strong>Distribute ownership</strong><p>Give each department a named prompt-library maintainer.</p></div></li>
+            <li><span>12</span><div><strong>Set the cadence</strong><p>Weekly report, monthly spotlight, quarterly impact review.</p></div></li>
+          </ol>
+          <div class="phase-proof"><span>Exit signal</span><strong>The program has owners, operating rhythms, and an automation backlog that no longer depends on launch energy.</strong></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="module module--wide shell" id="prompts" aria-labelledby="prompts-title">
+    <header class="module-head">
+      <div><span class="module-number">02</span><p class="eyebrow">Task-specific by default</p></div>
+      <div>
+        <h2 id="prompts-title">Searchable Prompt Library</h2>
+        <p>Starter prompts organized around work people already do. Search the full prompt text or filter by department and Microsoft 365 app.</p>
+      </div>
+    </header>
+
+    <div class="prompt-workbench">
+      <form class="prompt-controls" id="prompt-controls" role="search">
+        <label class="search-field" for="prompt-search">
+          <span>Search prompts</span>
+          <input id="prompt-search" name="search" type="search" placeholder="Try: meeting, supplier, summary…" autocomplete="off">
+        </label>
+        <label for="department-filter">
+          <span>Department</span>
+          <select id="department-filter" name="department"><option value="">All departments</option></select>
+        </label>
+        <label for="app-filter">
+          <span>App</span>
+          <select id="app-filter" name="app"><option value="">All apps</option></select>
+        </label>
+        <button class="reset-button" id="prompt-reset" type="reset">Reset filters</button>
+      </form>
+
+      <div class="result-bar">
+        <p id="prompt-status" aria-live="polite">Loading prompt library…</p>
+        <a href="https://github.com/Kenny-Yukich/Copilot-Adoption-Campaign/blob/main/templates/prompt-gallery/prompt-gallery.csv" target="_blank" rel="noreferrer">Open source CSV</a>
+      </div>
+      <div class="prompt-grid" id="prompt-grid"></div>
+      <button class="button button--secondary load-more" id="load-more" type="button" hidden>Show more prompts</button>
+      <noscript><p class="notice">JavaScript is required for prompt search. The complete library is available in the source CSV above.</p></noscript>
+    </div>
+  </section>
+
+  <section class="module shell" id="measurement" aria-labelledby="measurement-title">
+    <header class="module-head">
+      <div><span class="module-number">03</span><p class="eyebrow">Stable signals, same window</p></div>
+      <div>
+        <h2 id="measurement-title">Measurement &amp; Reporting</h2>
+        <p>Use a small set of signals that connect behavior to action. The sample readout below is synthetic and demonstrates the reporting model.</p>
+      </div>
+    </header>
+
+    <div class="measurement-board" aria-label="Synthetic adoption metrics example">
+      <div class="board-head"><span>Weekly signal board</span><span>Window: rolling 28 days</span><span>Sample data</span></div>
+      <div class="metric-grid">
+        <article class="metric-card metric-card--primary">
+          <div class="metric-label"><span>01</span>Active rate</div>
+          <strong>80<small>%</small></strong>
+          <div class="meter" role="img" aria-label="Active rate 80 percent"><i style="width:80%"></i></div>
+          <p>28 active / 35 counted users</p>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label"><span>02</span>Dormant users</div>
+          <strong>07</strong>
+          <div class="ticks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b></b><b></b><b></b></div>
+          <p>Zero activity in the selected window</p>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label"><span>03</span>App breadth</div>
+          <strong>2.6<small> apps</small></strong>
+          <div class="breadth-bars" aria-hidden="true"><i style="height:42%"></i><i style="height:70%"></i><i style="height:92%"></i><i style="height:58%"></i><i style="height:34%"></i><i style="height:76%"></i></div>
+          <p>Median distinct apps per active user</p>
+        </article>
+        <article class="metric-card">
+          <div class="metric-label"><span>04</span>Adoption trend</div>
+          <strong>+8<small> pts</small></strong>
+          <svg class="sparkline" viewBox="0 0 240 54" role="img" aria-label="Synthetic upward adoption trend over six periods">
+            <polyline points="2,45 48,39 94,40 140,29 186,24 238,8" fill="none" vector-effect="non-scaling-stroke"></polyline>
+            <g><circle cx="2" cy="45" r="3"></circle><circle cx="48" cy="39" r="3"></circle><circle cx="94" cy="40" r="3"></circle><circle cx="140" cy="29" r="3"></circle><circle cx="186" cy="24" r="3"></circle><circle cx="238" cy="8" r="3"></circle></g>
+          </svg>
+          <p>Direction matters only when the window is stable</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="reporting-flow" aria-label="Weekly reporting workflow">
+      <div><span>01</span><strong>Source</strong><p>Name the report and window.</p></div>
+      <div><span>02</span><strong>Calculate</strong><p>Run the same definitions.</p></div>
+      <div><span>03</span><strong>Interpret</strong><p>Separate behavior from artifacts.</p></div>
+      <div><span>04</span><strong>Act</strong><p>Assign one owner and date.</p></div>
+      <div><span>05</span><strong>Repeat</strong><p>Publish the same layout weekly.</p></div>
+    </div>
+
+    <aside class="analyzer-reserve" aria-labelledby="analyzer-title">
+      <div>
+        <p class="eyebrow">Phase 02 / Interface reserved</p>
+        <h3 id="analyzer-title">Privacy-safe adoption analyzer</h3>
+        <p>This module is designed for a future browser-only CSV workflow. Files will be processed locally, never uploaded, and exportable as a concise report.</p>
+        <ul class="tag-list" aria-label="Planned analyzer capabilities"><li>Active rate</li><li>Dormant users</li><li>App breadth</li><li>Trend view</li><li>Report export</li></ul>
+      </div>
+      <div class="dropzone-preview" aria-hidden="true">
+        <span>LOCAL PROCESSING ZONE</span>
+        <strong>Usage CSV</strong>
+        <p>Select file interface planned for phase two</p>
+        <i>NO UPLOAD</i>
+      </div>
+    </aside>
+  </section>
+
+  <section class="module shell" id="training" aria-labelledby="training-title">
+    <header class="module-head">
+      <div><span class="module-number">04</span><p class="eyebrow">Teach the task, not the tool</p></div>
+      <div>
+        <h2 id="training-title">Training Resources</h2>
+        <p>Three focused sessions that move from a first useful result to repeatable habits and finally to automation candidates.</p>
+      </div>
+    </header>
+
+    <div class="training-track">
+      <article><span class="track-marker">01</span><p class="eyebrow">Week 2 / 30 minutes</p><h3>It works on your stuff</h3><p>Trust conversation first, then one live success on the participant's own document or email.</p><strong>Output: one usable result</strong></article>
+      <article><span class="track-marker">02</span><p class="eyebrow">Week 5 / 30 minutes</p><h3>Make it yours</h3><p>Iterate, work across files, and build a personal shortlist tied to recurring weekly work.</p><strong>Output: three repeat prompts</strong></article>
+      <article><span class="track-marker">03</span><p class="eyebrow">Week 9 / 30 minutes</p><h3>Beyond the chat box</h3><p>Review what stuck and identify prompts that should become templates, flows, or agents.</p><strong>Output: automation candidate</strong></article>
+    </div>
+
+    <div class="resource-strip">
+      <div><span>Campaign assets</span><strong>Launch, reinforce, recognize, repeat.</strong></div>
+      <a href="https://github.com/Kenny-Yukich/Copilot-Adoption-Campaign/tree/main/templates/comms" target="_blank" rel="noreferrer">Communication templates</a>
+      <a href="https://github.com/Kenny-Yukich/Copilot-Adoption-Campaign/blob/main/docs/04-training-program.md" target="_blank" rel="noreferrer">Full training program</a>
+      <a href="https://github.com/Kenny-Yukich/Copilot-Adoption-Campaign/blob/main/templates/comms/challenge-kickoff.md" target="_blank" rel="noreferrer">Two-week challenge</a>
+    </div>
+  </section>
+
+  <section class="module shell" id="governance" aria-labelledby="governance-title">
+    <header class="module-head">
+      <div><span class="module-number">05</span><p class="eyebrow">Answer before launch</p></div>
+      <div>
+        <h2 id="governance-title">Governance Readiness Check</h2>
+        <p>A working checklist for the questions employees ask and the permission issues Copilot can make newly discoverable.</p>
+      </div>
+    </header>
+
+    <div class="governance-board">
+      <div class="checklist-head">
+        <div><span>Readiness status</span><strong><b id="governance-count">0</b> / 10 cleared</strong></div>
+        <div class="check-progress" aria-hidden="true"><i id="governance-progress"></i></div>
+        <button type="button" id="governance-reset">Clear checks</button>
+      </div>
+      <div class="checklist" id="governance-checklist">
+        <label><input type="checkbox"><span><b>01</b><strong>Permission scope</strong><small>Can employees explain that Copilot surfaces what they can already access?</small></span></label>
+        <label><input type="checkbox"><span><b>02</b><strong>Prompt logging</strong><small>Is logging, access, and review explained in plain language?</small></span></label>
+        <label><input type="checkbox"><span><b>03</b><strong>Tenant boundary</strong><small>Is the actual data boundary confirmed with the tenant owner?</small></span></label>
+        <label><input type="checkbox"><span><b>04</b><strong>Human accountability</strong><small>Does guidance state that the sender owns the output?</small></span></label>
+        <label><input type="checkbox"><span><b>05</b><strong>Broad-access sites</strong><small>Have highly permissive sites and libraries been reviewed?</small></span></label>
+        <label><input type="checkbox"><span><b>06</b><strong>Sharing links</strong><small>Have “anyone with the link” permissions been checked?</small></span></label>
+        <label><input type="checkbox"><span><b>07</b><strong>Sensitive locations</strong><small>Are HR, finance, legal, and IP locations appropriately restricted?</small></span></label>
+        <label><input type="checkbox"><span><b>08</b><strong>Retention coverage</strong><small>Are retention and eDiscovery expectations confirmed?</small></span></label>
+        <label><input type="checkbox"><span><b>09</b><strong>Acceptable use</strong><small>Is one-page do / don't / always guidance ready?</small></span></label>
+        <label><input type="checkbox"><span><b>10</b><strong>Escalation owner</strong><small>Does regulated data, IP, or contract risk have a named path?</small></span></label>
+      </div>
+      <p class="checklist-note">Checks are session-only and are not stored or transmitted.</p>
+    </div>
+  </section>
+
+  <section class="module shell" id="downloads" aria-labelledby="downloads-title">
+    <header class="module-head">
+      <div><span class="module-number">06</span><p class="eyebrow">Take the working files</p></div>
+      <div>
+        <h2 id="downloads-title">Downloads &amp; Source</h2>
+        <p>Use the files directly, adapt them to your organization, or inspect the complete public repository.</p>
+      </div>
+    </header>
+
+    <div class="download-grid">
+      <a href="https://github.com/Kenny-Yukich/Copilot-Adoption-Campaign/blob/main/templates/surveys/readiness-survey.md" target="_blank" rel="noreferrer"><span>MD / SURVEY</span><h3>Readiness Survey</h3><p>Find task-fit candidates and capture before-metrics.</p><b>Open file</b></a>
+      <a href="https://github.com/Kenny-Yukich/Copilot-Adoption-Campaign/blob/main/templates/reports/weekly-adoption-report-template.md" target="_blank" rel="noreferrer"><span>MD / REPORT</span><h3>Weekly Report</h3><p>A stable one-page rhythm: number, movement, action.</p><b>Open file</b></a>
+      <a href="https://github.com/Kenny-Yukich/Copilot-Adoption-Campaign/tree/main/templates/comms" target="_blank" rel="noreferrer"><span>MD / CAMPAIGN</span><h3>Communication Pack</h3><p>Launch, weekly tip, champion spotlight, and challenge copy.</p><b>Browse files</b></a>
+      <a href="https://raw.githubusercontent.com/Kenny-Yukich/Copilot-Adoption-Campaign/main/scripts/sample-data/sample_copilot_usage.csv" target="_blank" rel="noreferrer"><span>CSV / SYNTHETIC</span><h3>Sample Usage Data</h3><p>Privacy-safe example rows for testing the report workflow.</p><b>Open data</b></a>
+      <a href="https://github.com/Kenny-Yukich/Copilot-Adoption-Campaign/blob/main/scripts/adoption_report.py" target="_blank" rel="noreferrer"><span>PY / STANDARD LIBRARY</span><h3>Report Generator</h3><p>Generate a weekly report and dormant-user follow-up list.</p><b>View script</b></a>
+      <a class="download-grid__featured" href="https://github.com/Kenny-Yukich/Copilot-Adoption-Campaign" target="_blank" rel="noreferrer"><span>GIT / SOURCE</span><h3>Complete Repository</h3><p>Framework, prompts, reporting scripts, governance, training, and reusable templates.</p><b>View on GitHub</b></a>
+    </div>
+  </section>
+
+  <section class="closing shell" aria-labelledby="closing-title">
+    <p class="eyebrow">Field principle / 01</p>
+    <h2 id="closing-title">Adoption is not a launch event.<br>It is an operating system.</h2>
+    <p>Start with a task someone already does, make the first attempt useful, measure the same signals every week, and turn repeated behavior into something durable.</p>
+    <div><a class="button button--primary" href="#playbook">Use the playbook</a><a class="button button--secondary" href="/">Back to kennyyukich.com</a></div>
+  </section>
+</main>
+
+<footer class="footer shell">
+  <span>KENNY YUKICH / COPILOT ADOPTION KIT / REV 01</span>
+  <span>BUILT AS A STATIC, PUBLIC RESOURCE</span>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
