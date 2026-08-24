@@ -403,6 +403,16 @@ body.loading{overflow:hidden}
   margin:0;
 }
 .comp p{margin:0;font-size:14px;line-height:1.55;color:var(--steel);max-width:none}
+.comp-cta{
+  width:fit-content;
+  margin-top:auto;
+  padding-top:8px;
+  font-family:var(--mono);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
 @media (max-width:640px){.comps{grid-template-columns:1fr}}
 
 /* ---------- field reports ---------- */
@@ -628,8 +638,8 @@ body.loading{overflow:hidden}
       </div>
       <div class="jstop">
         <div class="jwhen">2026</div>
-        <h3>Shipped production agents, not demos</h3>
-        <p>Built and deployed the systems below — Copilot adoption at scale, a vision pipeline for handwritten shop logs, a Teams agent for part lookups — each one built to survive contact with people who don't have patience for tools that waste their time.</p>
+        <h3>Shipped systems, then shared the playbook</h3>
+        <p>Built agents, automations, and focused apps for real workflows — then published privacy-safe versions, implementation notes, and reusable tools so other teams can learn from the work.</p>
       </div>
     </div>
   </section>
@@ -643,30 +653,90 @@ body.loading{overflow:hidden}
     <div class="filters reveal" role="group" aria-label="Filter work by category">
       <button class="filter-btn" data-filter="all" type="button" aria-pressed="true">All</button>
       <button class="filter-btn" data-filter="adoption" type="button" aria-pressed="false">Adoption</button>
-      <button class="filter-btn" data-filter="pipelines" type="button" aria-pressed="false">Pipelines</button>
       <button class="filter-btn" data-filter="agents" type="button" aria-pressed="false">Agents</button>
+      <button class="filter-btn" data-filter="automation" type="button" aria-pressed="false">Automation</button>
+      <button class="filter-btn" data-filter="apps" type="button" aria-pressed="false">Apps</button>
     </div>
 
     <div class="comps">
-      <article class="comp reveal" data-cat="adoption">
+      <article class="comp reveal" data-cat="agents">
         <span class="idx mono">A</span>
-        <span class="cat">Adoption</span>
-        <h3>Copilot Adoption</h3>
-        <p>Rollout, training, and measurement across 69 licensed users in a plant where most employees don't work at a computer. Adoption strategy for people who judge software on whether it makes the day shorter.</p>
+        <span class="cat">Agent · Workflow</span>
+        <h3>AP Invoice Intake Agent</h3>
+        <p>Extracts vendor invoices, runs deterministic three-way matching, files clean invoices, and routes exceptions to a human in Teams.</p>
+        <a class="comp-cta" href="https://github.com/Kenny-Yukich/ap-invoice-intake-agent">View on GitHub →</a>
       </article>
 
-      <article class="comp reveal" data-cat="pipelines">
+      <article class="comp reveal" data-cat="automation">
         <span class="idx mono">B</span>
-        <span class="cat">Pipeline</span>
-        <h3>Log Extraction</h3>
-        <p>Vision-model pipeline that reads handwritten shop-floor production logs and turns them into structured data. Replaced manual transcription of records that had never been digitized.</p>
+        <span class="cat">Automation</span>
+        <h3>Plate Label Generator</h3>
+        <p>A dependency-free Python tool that turns CSV or JSON asset records into print-ready Code 39 SVG plates and tiled sheets.</p>
+        <a class="comp-cta" href="https://github.com/Kenny-Yukich/Plate-Label_Generator">View on GitHub →</a>
+      </article>
+
+      <article class="comp reveal" data-cat="automation">
+        <span class="idx mono">C</span>
+        <span class="cat">Automation</span>
+        <h3>CertTracker</h3>
+        <p>A Microsoft 365 certification tracker with centralized records, daily compliance checks, expiration warnings, and overdue alerts.</p>
+        <a class="comp-cta" href="https://github.com/Kenny-Yukich/CertTracker">View on GitHub →</a>
+      </article>
+
+      <article class="comp reveal" data-cat="adoption">
+        <span class="idx mono">D</span>
+        <span class="cat">Adoption</span>
+        <h3>Copilot Adoption Campaign</h3>
+        <p>A field-tested M365 Copilot rollout kit with training, prompt libraries, communication templates, metrics, and reporting scripts.</p>
+        <a class="comp-cta" href="https://github.com/Kenny-Yukich/Copilot-Adoption-Campaign">View on GitHub →</a>
       </article>
 
       <article class="comp reveal" data-cat="agents">
-        <span class="idx mono">C</span>
+        <span class="idx mono">E</span>
         <span class="cat">Agent</span>
-        <h3>Part Resolution</h3>
-        <p>Conversational agent in Teams that resolves aftermarket part numbers on request. Built for the people who used to interrupt someone else to get the answer.</p>
+        <h3>Safety Assistant Agent</h3>
+        <p>A privacy-safe Copilot Studio reference for grounded safety Q&amp;A and permission-aware equipment-certification lookups.</p>
+        <a class="comp-cta" href="https://github.com/Kenny-Yukich/Safety-Assistant-Agent">View on GitHub →</a>
+      </article>
+
+      <article class="comp reveal" data-cat="agents">
+        <span class="idx mono">F</span>
+        <span class="cat">Agent</span>
+        <h3>Lean Process Improvement Agent</h3>
+        <p>An AI coach that uses TIMWOODS and PDCA to turn frontline observations into structured, review-ready Kaizen cards.</p>
+        <a class="comp-cta" href="https://github.com/Kenny-Yukich/LEAN-Process-Improvement-Agent">View on GitHub →</a>
+      </article>
+
+      <article class="comp reveal" data-cat="agents">
+        <span class="idx mono">G</span>
+        <span class="cat">Agent</span>
+        <h3>Power Flow Build Assistant</h3>
+        <p>Turns a plain-language automation need into a verified, step-by-step Power Automate build guide without inventing connector names.</p>
+        <a class="comp-cta" href="https://github.com/Kenny-Yukich/power-flow-build-assistant">View on GitHub →</a>
+      </article>
+
+      <article class="comp reveal" data-cat="agents">
+        <span class="idx mono">H</span>
+        <span class="cat">Agent</span>
+        <h3>Copilot Studio Agent Builder</h3>
+        <p>A beginner-focused build coach with click-by-click guidance grounded in current Microsoft Learn documentation.</p>
+        <a class="comp-cta" href="https://github.com/Kenny-Yukich/copilot-studio-agent-builder">View on GitHub →</a>
+      </article>
+
+      <article class="comp reveal" data-cat="apps">
+        <span class="idx mono">I</span>
+        <span class="cat">App</span>
+        <h3>Redside</h3>
+        <p>An offline-first Central Oregon fishing PWA with water rankings, live conditions, beginner guides, and an on-device catch log.</p>
+        <a class="comp-cta" href="https://github.com/Kenny-Yukich/Redside">View on GitHub →</a>
+      </article>
+
+      <article class="comp reveal" data-cat="apps">
+        <span class="idx mono">J</span>
+        <span class="cat">App</span>
+        <h3>Cadence</h3>
+        <p>A private, installable cycle tracker that works offline and stores everything on the device — no account or server required.</p>
+        <a class="comp-cta" href="https://github.com/Kenny-Yukich/Cadence">View on GitHub →</a>
       </article>
 
       <!-- ============================================================
@@ -675,7 +745,7 @@ body.loading{overflow:hidden}
            (b) your sister has approved showing the build publicly.
            Replace CASE_STUDY_URL with the real link.
       <article class="comp reveal" data-cat="agents">
-        <span class="idx mono">D</span>
+        <span class="idx mono">K</span>
         <span class="cat">Client work</span>
         <h3>Developing The Heart</h3>
         <p>Discovery, architecture, build, and handoff for a solo telehealth counseling practice with hard privacy constraints. <a href="CASE_STUDY_URL">Read the case study</a></p>
