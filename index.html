@@ -23,11 +23,11 @@
 <style>
 :root{
   --ink:#1A2733;
-  --steel:#5C7285;
-  --line:#8FA3B3;
-  --grid:#DCE4E9;
-  --sheet:#F7F9FA;
-  --plate:#FDFEFE;
+  --steel:#586F81;
+  --line:#526D82;
+  --grid:#C5D3DC;
+  --sheet:#E5EDF2;
+  --plate:#FFFFFF;
   --blue:#1857A8;
   --blue-dark:#0E3B75;
 
@@ -42,10 +42,10 @@
   :root{
     --ink:#E7ECEF;
     --steel:#93A6B5;
-    --line:#3A4C59;
-    --grid:#233038;
-    --sheet:#12181D;
-    --plate:#171F25;
+    --line:#687F8E;
+    --grid:#19262E;
+    --sheet:#091015;
+    --plate:#202D36;
     --blue:#5B9BE0;
     --blue-dark:#8FC0F2;
   }
@@ -63,7 +63,7 @@ body{
   background-size:24px 24px;
   color:var(--ink);
   font-family:var(--body);
-  font-size:17px;
+  font-size:18px;
   line-height:1.62;
   -webkit-font-smoothing:antialiased;
 }
@@ -138,12 +138,12 @@ body.loading{overflow:hidden}
   font-weight:700;
   text-transform:uppercase;
   letter-spacing:.02em;
-  font-size:15px;
+  font-size:16px;
 }
 .bar-nav{display:flex;gap:20px;align-items:center}
 .bar-nav a{
   font-family:var(--mono);
-  font-size:11px;
+  font-size:12px;
   letter-spacing:.06em;
   text-transform:uppercase;
   color:var(--steel);
@@ -165,12 +165,13 @@ body.loading{overflow:hidden}
   display:flex;
   flex-direction:column;
   gap:16px;
+  box-shadow:9px 9px 0 color-mix(in srgb, var(--line) 50%, transparent);
 }
 .rev{
   position:absolute;
   top:12px;right:16px;
-  font-size:10px;
-  color:var(--line);
+  font-size:11px;
+  color:var(--steel);
   letter-spacing:.06em;
 }
 
@@ -203,11 +204,32 @@ body.loading{overflow:hidden}
   margin:0;
 }
 .plate-line{
-  font-size:clamp(17px,3.2vw,19px);
+  font-size:clamp(18px,3.2vw,20px);
   line-height:1.5;
   margin:14px 0 0;
   max-width:42ch;
   color:var(--steel);
+}
+
+.hero-award{
+  display:grid;
+  gap:3px;
+  margin-top:20px;
+  padding:11px 14px;
+  border-left:3px solid var(--blue);
+  background:color-mix(in srgb, var(--blue) 7%, var(--plate));
+}
+.hero-award strong{
+  font-family:var(--display);
+  font-size:14px;
+  line-height:1.35;
+  text-transform:uppercase;
+}
+.hero-award span{
+  color:var(--steel);
+  font-family:var(--mono);
+  font-size:12px;
+  line-height:1.45;
 }
 
 .fields{
@@ -218,7 +240,7 @@ body.loading{overflow:hidden}
   border-top:1px solid var(--line);
   margin-top:6px;
   font-family:var(--mono);
-  font-size:12px;
+  font-size:13px;
   color:var(--steel);
 }
 
@@ -244,13 +266,13 @@ body.loading{overflow:hidden}
   font-family:var(--display);
   font-weight:600;
   text-transform:uppercase;
-  font-size:14px;
+  font-size:15px;
   letter-spacing:.05em;
 }
 
 .section p{margin:0 0 18px;max-width:62ch}
 .section p:last-child{margin-bottom:0}
-.lede{font-size:19px;line-height:1.55}
+.lede{font-size:20px;line-height:1.55}
 
 /* ---------- toolkit ---------- */
 
@@ -269,7 +291,7 @@ body.loading{overflow:hidden}
 .toolkit-row:last-child{border-bottom:1px solid var(--line)}
 .toolkit-label{
   font-family:var(--mono);
-  font-size:11px;
+  font-size:12px;
   letter-spacing:.08em;
   text-transform:uppercase;
   color:var(--steel);
@@ -282,7 +304,7 @@ body.loading{overflow:hidden}
 }
 .toolkit-chip{
   font-family:var(--mono);
-  font-size:13px;
+  font-size:14px;
   color:var(--ink);
   border:1px solid var(--line);
   padding:7px 13px;
@@ -326,7 +348,7 @@ body.loading{overflow:hidden}
 }
 .jstop .jwhen{
   font-family:var(--mono);
-  font-size:11px;
+  font-size:12px;
   color:var(--blue);
   letter-spacing:.05em;
   text-transform:uppercase;
@@ -334,11 +356,11 @@ body.loading{overflow:hidden}
 .jstop h3{
   font-family:var(--display);
   font-weight:600;
-  font-size:17px;
+  font-size:18px;
   text-transform:uppercase;
   margin:6px 0 6px;
 }
-.jstop p{margin:0;font-size:15px;line-height:1.6;color:var(--steel);max-width:56ch}
+.jstop p{margin:0;font-size:16px;line-height:1.6;color:var(--steel);max-width:56ch}
 
 /* ---------- work filters ---------- */
 
@@ -350,7 +372,7 @@ body.loading{overflow:hidden}
 }
 .filter-btn{
   font-family:var(--mono);
-  font-size:13px;
+  font-size:14px;
   font-weight:400;
   color:var(--steel);
   background:var(--plate);
@@ -379,6 +401,7 @@ body.loading{overflow:hidden}
 .comp{
   background:var(--plate);
   border:1px solid var(--line);
+  box-shadow:5px 5px 0 color-mix(in srgb, var(--line) 40%, transparent);
   padding:24px;
   display:flex;
   flex-direction:column;
@@ -387,10 +410,10 @@ body.loading{overflow:hidden}
 }
 .comp:hover{border-color:var(--blue);background:color-mix(in srgb, var(--blue) 5%, var(--plate))}
 .comp.hide{display:none}
-.comp .idx{font-family:var(--mono);font-size:11px;color:var(--line)}
+.comp .idx{font-family:var(--mono);font-size:12px;color:var(--steel)}
 .comp .cat{
   font-family:var(--mono);
-  font-size:10px;
+  font-size:11px;
   letter-spacing:.04em;
   text-transform:uppercase;
   color:var(--blue);
@@ -399,16 +422,16 @@ body.loading{overflow:hidden}
   font-family:var(--display);
   font-weight:600;
   text-transform:uppercase;
-  font-size:16px;
+  font-size:17px;
   margin:0;
 }
-.comp p{margin:0;font-size:14px;line-height:1.55;color:var(--steel);max-width:none}
+.comp p{margin:0;font-size:15px;line-height:1.55;color:var(--steel);max-width:none}
 .comp-cta{
   width:fit-content;
   margin-top:auto;
   padding-top:8px;
   font-family:var(--mono);
-  font-size:10px;
+  font-size:11px;
   font-weight:700;
   letter-spacing:.04em;
   text-transform:uppercase;
@@ -425,6 +448,7 @@ body.loading{overflow:hidden}
 .report{
   background:var(--plate);
   border:1px solid var(--line);
+  box-shadow:5px 5px 0 color-mix(in srgb, var(--line) 40%, transparent);
   padding:22px;
   display:flex;
   flex-direction:column;
@@ -433,20 +457,31 @@ body.loading{overflow:hidden}
 }
 .report .src{
   font-family:var(--mono);
-  font-size:10px;
+  font-size:11px;
   letter-spacing:.08em;
   text-transform:uppercase;
   color:var(--blue);
 }
 .report p{
   margin:0;
-  font-size:15px;
+  font-size:16px;
   line-height:1.6;
   color:var(--ink);
   max-width:none;
 }
 .report p::before{content:"\201C"}
 .report p::after{content:"\201D"}
+.report .attribution{
+  margin-top:auto;
+  color:var(--steel);
+  font-family:var(--mono);
+  font-size:12px;
+  font-style:normal;
+  line-height:1.45;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+.report .attribution::before{content:"\2014\00A0";color:var(--blue)}
 @media (max-width:640px){.reports{grid-template-columns:1fr}}
 
 /* ---------- record ---------- */
@@ -456,7 +491,7 @@ body.loading{overflow:hidden}
   display:grid;
   grid-template-columns:100px 1fr;
   gap:10px 20px;
-  font-size:13px;
+  font-size:14px;
   line-height:1.55;
   color:var(--steel);
 }
@@ -475,7 +510,7 @@ body.loading{overflow:hidden}
 }
 .talk{
   margin:0 0 6px;
-  font-size:17px;
+  font-size:18px;
   line-height:1.6;
   color:var(--steel);
   max-width:52ch;
@@ -489,7 +524,7 @@ body.loading{overflow:hidden}
   display:inline-block;
   width:fit-content;
 }
-.elsewhere{font-family:var(--mono);font-size:13px;display:flex;gap:22px;flex-wrap:wrap;align-items:center}
+.elsewhere{font-family:var(--mono);font-size:14px;display:flex;gap:22px;flex-wrap:wrap;align-items:center}
 .resume-btn{
   border:1px solid var(--blue);
   background:color-mix(in srgb, var(--blue) 8%, transparent);
@@ -501,9 +536,9 @@ body.loading{overflow:hidden}
 
 .colophon{
   font-family:var(--mono);
-  font-size:11px;
+  font-size:12px;
   letter-spacing:.04em;
-  color:var(--line);
+  color:var(--steel);
   margin-top:10px;
 }
 
@@ -556,6 +591,10 @@ body.loading{overflow:hidden}
       <div>
         <h1 class="plate-name reveal" style="--d:.12s">Kenny Yukich</h1>
         <p class="plate-line reveal" style="--d:.22s">AI systems for a manufacturing floor — designed, built, and measured by the person who runs them.</p>
+        <div class="hero-award reveal" style="--d:.3s">
+          <strong>2nd Place · Best Microsoft Copilot Integration</strong>
+          <span>VSLive! Microsoft AI Hackathon 2026 · Microsoft HQ · Solo entry</span>
+        </div>
       </div>
     </div>
 
@@ -573,8 +612,9 @@ body.loading{overflow:hidden}
       <span class="secname">Scope of work</span>
     </div>
     <p class="lede reveal">Most AI programs fail at the last mile. The model works, the demo lands, and then nobody uses the thing.</p>
-    <p class="reveal" style="--d:.08s">My work is that last mile. I run Microsoft Copilot adoption across 69 licensed users at a 200-person manufacturer where most of the workforce is on the floor, not at a desk — so every tool has to justify itself in minutes saved, not capability demonstrated. I build the agents and automations myself, in Power Platform, Copilot Studio, Python, and Azure, and I measure them by whether people still use them in week three.</p>
-    <p class="reveal" style="--d:.14s">I came to this from the parts department. I spent 2025 pulling orders, taught myself retrieval systems on nights and weekends starting in late 2022, and moved into this role in January 2026. That path is why I'm skeptical of AI that looks impressive and saves nobody any time.</p>
+    <p class="reveal" style="--d:.08s">Drove Microsoft 365 Copilot from 5 to 68 active users, reaching the program's 92% adoption target before the license pool expanded to 77 seats.</p>
+    <p class="reveal" style="--d:.12s">My work is that last mile. Most of the workforce is on the floor, not at a desk — so every tool has to justify itself in minutes saved, not capability demonstrated. I build the agents and automations myself, in Power Platform, Copilot Studio, Dataverse, and Azure, and I measure them by whether people still use them in week three.</p>
+    <p class="reveal" style="--d:.16s">I came to this from the manufacturing floor. I taught myself retrieval systems and AI tooling on nights and weekends, then built an agent to help me learn a new role faster. That practical starting point is why I'm skeptical of AI that looks impressive and saves nobody any time.</p>
   </section>
 
   <section class="section" id="toolkit">
@@ -590,7 +630,6 @@ body.loading{overflow:hidden}
           <span class="toolkit-chip">Power Platform</span>
           <span class="toolkit-chip">Copilot Studio</span>
           <span class="toolkit-chip">Power Automate</span>
-          <span class="toolkit-chip">SharePoint</span>
         </div>
       </div>
       <div class="toolkit-row">
@@ -598,7 +637,8 @@ body.loading{overflow:hidden}
         <div class="toolkit-chips">
           <span class="toolkit-chip">Azure</span>
           <span class="toolkit-chip">Dataverse</span>
-          <span class="toolkit-chip">Python</span>
+          <span class="toolkit-chip">SharePoint</span>
+          <span class="toolkit-chip">CSV / JSON</span>
         </div>
       </div>
       <div class="toolkit-row">
@@ -628,18 +668,18 @@ body.loading{overflow:hidden}
     <div class="journey reveal">
       <div class="jstop">
         <div class="jwhen">Late 2022 — 2025</div>
-        <h3>Parts department, nights and weekends</h3>
-        <p>Pulled orders during the day. Taught myself retrieval systems and AI tooling on my own time, with no formal path into it — just a hunch this mattered and would keep mattering.</p>
+        <h3>Manufacturing floor, nights and weekends</h3>
+        <p>Worked on the manufacturing floor during the day. Taught myself retrieval systems and AI tooling on my own time, then built an agent for myself to get up to speed in a new manufacturing role.</p>
       </div>
       <div class="jstop">
         <div class="jwhen">January 2026</div>
-        <h3>Moved into IT AI Productivity Coordinator</h3>
-        <p>Took over Microsoft Copilot adoption for the plant. Inherited a rollout that needed to prove itself in minutes saved, not slide decks — a mandate that matched how I'd already been thinking about this.</p>
+        <h3>A personal agent led to KEITH's first AI role</h3>
+        <p>After KEITH's CEO heard about the agent, leadership asked me to pitch several ideas and interview for a role that did not yet exist. The CEO then created the company's first dedicated AI role, and I moved into it in January 2026.</p>
       </div>
       <div class="jstop">
         <div class="jwhen">2026</div>
-        <h3>Shipped systems, then shared the playbook</h3>
-        <p>Built agents, automations, and focused apps for real workflows — then published privacy-safe versions, implementation notes, and reusable tools so other teams can learn from the work.</p>
+        <h3>Created the Copilot program, then shared the playbook</h3>
+        <p>Built KEITH's Microsoft 365 Copilot adoption program from scratch, grew it from 5 to 68 active users, and shipped agents and automations for frontline workflows — then published the practical playbook behind the rollout.</p>
       </div>
     </div>
   </section>
@@ -764,22 +804,27 @@ body.loading{overflow:hidden}
       <figure class="report reveal">
         <span class="src">Kaizen Coach</span>
         <p>I worked with your Kaizen Coach for hours yesterday fixing the parameters for EU MRP and I am very pleased with the final result.</p>
+        <figcaption class="attribution">Subsidiary Support</figcaption>
       </figure>
       <figure class="report reveal">
         <span class="src">Serial Plate Generator</span>
         <p>We would type out one plate at a time, place 28 plates on one sheet, and print it twice. With the new sized plates, serial number generator, and script, we probably save well over an hour of work per 56 plates.</p>
+        <figcaption class="attribution">Engraving Department Lead</figcaption>
       </figure>
       <figure class="report reveal">
         <span class="src">Safety Assistant</span>
         <p>The Safety Assistant helped me find the information I needed without interrupting someone else. That's a big win during a busy day.</p>
+        <figcaption class="attribution">Plant Manager</figcaption>
       </figure>
       <figure class="report reveal">
         <span class="src">Bunker Lookup Agent</span>
         <p>What used to take several phone calls and a lot of searching now takes a few minutes. The Bunker Lookup Agent has made customer support much faster.</p>
+        <figcaption class="attribution">Drafter / Technical Writer</figcaption>
       </figure>
       <figure class="report reveal">
         <span class="src">CertTracker</span>
         <p>Before CertTracker, keeping track of certifications was mostly manual. Now I can find what I need almost instantly.</p>
+        <figcaption class="attribution">Safety Coordinator</figcaption>
       </figure>
       <figure class="report reveal">
         <span class="src">Copilot Training</span>
@@ -788,6 +833,7 @@ body.loading{overflow:hidden}
       <figure class="report reveal">
         <span class="src">Adoption Program</span>
         <p>Kenny's approach focused on solving actual business problems rather than implementing technology for technology's sake.</p>
+        <figcaption class="attribution">Manufacturing / Management Consultant</figcaption>
       </figure>
     </div>
   </section>
@@ -799,11 +845,11 @@ body.loading{overflow:hidden}
     </div>
 
     <div class="recgrid reveal">
-      <div>2026</div><div>Second place, <a href="https://vslive.com/events/microsofthq-2026/hackathon.aspx">VSLive Microsoft HQ Hackathon for Developers</a> — built an <a href="https://github.com/Kenny-Yukich/ap-invoice-intake-agent">AP invoice intake agent</a></div>
+      <div>2026</div><div>2nd Place · Best Microsoft Copilot Integration, <a href="https://vslive.com/events/microsofthq-2026/hackathon.aspx">VSLive! Microsoft AI Hackathon 2026</a> at Microsoft HQ — solo entry; built an <a href="https://github.com/Kenny-Yukich/ap-invoice-intake-agent">AP invoice intake agent</a></div>
       <div>2026</div><div>Microsoft SMB Workflows Design Partner Program</div>
       <div>2026</div><div>Microsoft Teams SMB Customer Advisory Board</div>
       <div>CERT</div><div>Microsoft 365 Generative AI · AI Agent Builder Associate (AB-620), expected September 2026</div>
-      <div>STACK</div><div>Power Platform · Copilot Studio · Python · Azure · Claude &amp; OpenAI APIs</div>
+      <div>STACK</div><div>Power Platform · Copilot Studio · Dataverse · Azure · Claude &amp; OpenAI APIs</div>
       <div>EDU</div><div>B.S. General Science, Oregon State University</div>
       <div>BEFORE</div><div>Hosted STEPN DAILY — 300+ episodes covering the STEPN ($GMT) web3 ecosystem — and grew a 14,000-follower audience on X as <a href="https://x.com/Ktrain_USA">@Ktrain_USA</a></div>
     </div>
