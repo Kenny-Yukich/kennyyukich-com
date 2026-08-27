@@ -177,21 +177,22 @@ body.loading{overflow:hidden}
 
 .plate-top{
   display:grid;
-  grid-template-columns:150px 1fr;
+  grid-template-columns:180px 1fr;
   gap:0 32px;
   align-items:start;
 }
 .portrait{
-  width:150px;
-  height:150px;
+  width:180px;
+  height:240px;
   display:block;
   border:2px solid var(--ink);
   object-fit:cover;
+  object-position:center center;
   background:var(--sheet);
 }
 @media (max-width:560px){
   .plate-top{grid-template-columns:1fr;gap:20px 0}
-  .portrait{width:118px;height:118px}
+  .portrait{width:150px;height:200px}
 }
 
 .plate-name{
@@ -584,9 +585,8 @@ body.loading{overflow:hidden}
 
     <div class="plate-top">
       <img class="portrait reveal" style="--d:.05s"
-           src="img/portrait.jpg"
-           srcset="img/portrait.jpg 1x, img/portrait@2x.jpg 2x"
-           width="150" height="150" loading="eager" decoding="async"
+           src="img/website photo.png"
+           width="180" height="240" loading="eager" decoding="async"
            alt="Kenny Yukich">
       <div>
         <h1 class="plate-name reveal" style="--d:.12s">Kenny Yukich</h1>
