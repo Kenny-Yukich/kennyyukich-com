@@ -80,35 +80,6 @@ a:focus-visible{outline:2px solid var(--blue);outline-offset:4px;border-radius:1
 
 .mono{font-family:var(--mono)}
 
-/* ---------- loading intro ---------- */
-
-#loader{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  background:var(--sheet);
-  display:flex;
-  align-items:flex-end;
-  justify-content:flex-start;
-  padding:clamp(24px,6vw,48px);
-  transition:opacity .5s var(--ease),visibility .5s var(--ease);
-}
-#loader.done{opacity:0;visibility:hidden;pointer-events:none}
-#loader-pct{
-  font-family:var(--mono);
-  font-size:clamp(40px,10vw,84px);
-  font-weight:700;
-  color:var(--ink);
-  font-variant-numeric:tabular-nums;
-  letter-spacing:-.02em;
-}
-#loader-pct::after{content:"%"}
-body.loading{overflow:hidden}
-
-@media (prefers-reduced-motion:reduce){
-  #loader{display:none}
-}
-
 /* ---------- sticky bar ---------- */
 
 .bar{
@@ -231,6 +202,44 @@ body.loading{overflow:hidden}
   font-family:var(--mono);
   font-size:12px;
   line-height:1.45;
+}
+.hero-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:14px;
+}
+.hero-action{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:44px;
+  max-width:100%;
+  padding:9px 15px;
+  border:1px solid var(--blue);
+  font-family:var(--mono);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.03em;
+  text-align:center;
+  text-transform:uppercase;
+}
+.hero-action.primary{
+  background:var(--blue);
+  color:var(--sheet);
+}
+.hero-action.primary:hover{
+  background:var(--blue-dark);
+  border-bottom-color:var(--blue-dark);
+  color:var(--sheet);
+}
+.hero-action.secondary{
+  background:color-mix(in srgb, var(--blue) 8%, transparent);
+}
+.hero-action.secondary:hover{
+  background:var(--blue);
+  border-bottom-color:var(--blue);
+  color:var(--sheet);
 }
 
 .fields{
@@ -560,9 +569,7 @@ body.loading{overflow:hidden}
 }
 </style>
 </head>
-<body class="loading">
-
-<div id="loader" aria-hidden="true"><span id="loader-pct" class="mono">0</span></div>
+<body>
 
 <div class="bar" id="bar">
   <div class="bar-in">
@@ -594,6 +601,10 @@ body.loading{overflow:hidden}
         <div class="hero-award reveal" style="--d:.3s">
           <strong>2nd Place · Best Microsoft Copilot Integration</strong>
           <span>VSLive! Microsoft AI Hackathon 2026 · Microsoft HQ · Solo entry</span>
+        </div>
+        <div class="hero-actions reveal" style="--d:.4s">
+          <a class="hero-action primary" href="/copilot-adoption-kit/">View flagship case study</a>
+          <a class="hero-action secondary" href="Kenny_Yukich_Resume_Aug2026%20(3).docx" download="Kenny-Yukich-Resume.docx">Download resume</a>
         </div>
       </div>
     </div>
@@ -804,7 +815,7 @@ body.loading{overflow:hidden}
       <figure class="report reveal">
         <span class="src">Kaizen Coach</span>
         <p>I worked with your Kaizen Coach for hours yesterday fixing the parameters for EU MRP and I am very pleased with the final result.</p>
-        <figcaption class="attribution">Subsidiary Support</figcaption>
+        <figcaption class="attribution">Subsidiary Support Lead</figcaption>
       </figure>
       <figure class="report reveal">
         <span class="src">Serial Plate Generator</span>
@@ -829,6 +840,7 @@ body.loading{overflow:hidden}
       <figure class="report reveal">
         <span class="src">Copilot Training</span>
         <p>The training focused on practical examples instead of AI buzzwords, which made it easy to apply to my job.</p>
+        <figcaption class="attribution">Parts Department Lead</figcaption>
       </figure>
       <figure class="report reveal">
         <span class="src">Adoption Program</span>
@@ -859,8 +871,7 @@ body.loading{overflow:hidden}
     <p class="talk">Talk to me about Copilot adoption, production AI agents, or getting a shop floor to actually use new tools.</p>
     <a class="mail" href="mailto:kenny@kennyyukich.com">kenny@kennyyukich.com</a>
     <div class="elsewhere">
-      <!-- Add resume.pdf to the repo root, then this link goes live as-is -->
-      <a class="resume-btn" href="resume.pdf" download>Download resume</a>
+      <a class="resume-btn" href="Kenny_Yukich_Resume_Aug2026%20(3).docx" download="Kenny-Yukich-Resume.docx">Download resume</a>
       <a href="https://www.linkedin.com/in/kenny-yukich-4092521a8/">LinkedIn</a>
       <a href="https://github.com/Kenny-Yukich">GitHub</a>
     </div>
@@ -873,32 +884,6 @@ body.loading{overflow:hidden}
 <script>
 (function(){
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var body = document.body;
-
-  /* loading intro */
-  var loader = document.getElementById("loader");
-  var pctEl = document.getElementById("loader-pct");
-  function finishLoad(){
-    body.classList.remove("loading");
-    if (loader) loader.classList.add("done");
-  }
-  if (reduce || !loader) {
-    finishLoad();
-  } else {
-    var pct = 0;
-    var tick = setInterval(function(){
-      /* ease off as it approaches 100 so the finish feels deliberate */
-      var step = pct < 70 ? 8 + Math.random() * 10 : 4 + Math.random() * 6;
-      pct = Math.min(100, pct + Math.round(step));
-      pctEl.textContent = pct;
-      if (pct >= 100) {
-        clearInterval(tick);
-        setTimeout(finishLoad, 250);
-      }
-    }, 65);
-    /* hard fallback so a slow tab never gets stuck behind the loader */
-    setTimeout(finishLoad, 2500);
-  }
 
   /* smooth scroll — optional enhancement, page works fine without it */
   if (!reduce && window.Lenis) {

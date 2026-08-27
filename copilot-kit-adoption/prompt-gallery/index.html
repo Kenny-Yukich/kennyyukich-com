@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manufacturing Copilot Prompt Gallery — Kenny Yukich</title>
+<meta name="description" content="Search 18 field-focused Microsoft 365 Copilot prompts across engineering, service, parts, production, safety, purchasing, accounting, sales, and leadership.">
+<meta property="og:title" content="Manufacturing Copilot Prompt Gallery — Kenny Yukich">
+<meta property="og:description" content="A searchable field prompt library built around real manufacturing work.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kennyyukich.com/copilot-kit-adoption/prompt-gallery/">
+<meta property="og:image" content="https://kennyyukich.com/img/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/img/portrait.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Archivo+Expanded:wght@600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../copilot-adoption-kit/styles.css">
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Manufacturing Copilot Prompt Gallery",
+  "description": "A searchable collection of 18 field-focused Microsoft 365 Copilot prompts across nine manufacturing departments.",
+  "url": "https://kennyyukich.com/copilot-kit-adoption/prompt-gallery/",
+  "author": {"@type": "Person", "name": "Kenny Yukich", "url": "https://kennyyukich.com"}
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-bar">
+  <div class="site-bar__inner">
+    <a class="brand" href="/">Kenny Yukich</a>
+    <span class="site-bar__divider" aria-hidden="true"></span>
+    <a class="product-name" href="/copilot-kit-adoption/">Copilot Adoption / Prompt Gallery</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="resource-nav">Menu</button>
+    <nav class="resource-nav" id="resource-nav" aria-label="Prompt gallery navigation">
+      <a href="#gallery">Gallery</a>
+      <a href="#guardrails">Use safely</a>
+      <a href="/copilot-kit-adoption/90-day-playbook/">Playbook</a>
+      <a href="/copilot-kit-adoption/">Case study</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero shell" id="top" aria-labelledby="page-title">
+    <div class="hero-plate hero-plate--field hero-plate--resource">
+      <div class="hero-plate__rail" aria-hidden="true">
+        <span>FIELD LIBRARY / MANUFACTURING</span>
+        <span>RESOURCE 02</span>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow">Secondary resource / Searchable library</p>
+        <h1 id="page-title">Manufacturing Prompt Gallery</h1>
+        <p class="hero-lede">Field prompts built around engineering, service, parts, production, safety, purchasing, accounting, sales, and leadership work, with guardrails written into the task.</p>
+        <div class="hero-actions">
+          <a class="button button--primary" href="#gallery">Browse prompts</a>
+          <a class="button button--secondary" href="../data/prompt-gallery.csv" download>Download CSV</a>
+        </div>
+      </div>
+      <aside class="hero-instrument" aria-label="Prompt library summary">
+        <div class="instrument-head"><span>Library scope</span><span class="status"><i aria-hidden="true"></i> Working file</span></div>
+        <dl class="readouts">
+          <div><dt>Field prompts</dt><dd id="hero-prompt-count">18 <small>prompts</small></dd></div>
+          <div><dt>Departments</dt><dd>9 <small>functions</small></dd></div>
+          <div><dt>Copilot surfaces</dt><dd>5 <small>apps</small></dd></div>
+          <div><dt>Verified patterns</dt><dd>4 <small>patterns</small></dd></div>
+        </dl>
+        <p class="instrument-note">A verified pattern reflects the shape of a deployed workflow. It does not remove source validation, permissions, review, or accountable approval.</p>
+      </aside>
+    </div>
+    <nav class="module-index module-index--field module-index--compact" aria-label="Prompt gallery sections">
+      <a href="#gallery"><span>01</span>Search the library</a>
+      <a href="#guardrails"><span>02</span>Use prompts safely</a>
+      <a href="/copilot-kit-adoption/90-day-playbook/"><span>03</span>Adoption playbook</a>
+      <a href="/copilot-kit-adoption/"><span>04</span>Case study</a>
+    </nav>
+  </section>
+
+  <section class="module module--wide shell" id="gallery" aria-labelledby="gallery-title">
+    <header class="module-head">
+      <div><span class="module-number">01</span><p class="eyebrow">Built around plant work</p></div>
+      <div><h2 id="gallery-title">Find a prompt by task, department, or app</h2><p>Use these as structured starting points. Replace placeholders, point Copilot at approved sources, and keep accountable people in the decision.</p></div>
+    </header>
+
+    <div class="prompt-workbench">
+      <form class="prompt-controls" id="prompt-controls" role="search">
+        <label class="search-field" for="prompt-search"><span>Search prompts</span><input id="prompt-search" name="search" type="search" placeholder="Try: safety, supplier, shift…" autocomplete="off"></label>
+        <label for="department-filter"><span>Department</span><select id="department-filter" name="department"><option value="">All departments</option></select></label>
+        <label for="app-filter"><span>App</span><select id="app-filter" name="app"><option value="">All apps</option></select></label>
+        <button class="reset-button" id="prompt-reset" type="reset">Reset filters</button>
+      </form>
+      <div class="result-bar">
+        <p id="prompt-status" aria-live="polite">Loading manufacturing prompt library…</p>
+        <a href="../data/prompt-gallery.csv" download>Download field CSV</a>
+      </div>
+      <div class="prompt-grid" id="prompt-grid" data-source="../data/prompt-gallery.csv"></div>
+      <button class="button button--secondary load-more" id="load-more" type="button" hidden>Show more prompts</button>
+      <noscript><p class="notice">JavaScript is required for prompt search. Download the CSV above to browse the complete library.</p></noscript>
+    </div>
+  </section>
+
+  <section class="module shell" id="guardrails" aria-labelledby="guardrails-title">
+    <header class="module-head">
+      <div><span class="module-number">02</span><p class="eyebrow">Use safely</p></div>
+      <div><h2 id="guardrails-title">The prompt is not the control system</h2><p>Good task design helps, but permissions, approved sources, human review, and accountable decisions still define safe use.</p></div>
+    </header>
+    <div class="constraint-grid guardrail-grid">
+      <article><span>01 / Grounding</span><h3>Name the source boundary</h3><p>Point the task at approved project files, released drawings, manuals, policies, exports, or records. Ask the model to show conflicts instead of resolving them silently.</p><strong>Control: traceable sources</strong></article>
+      <article><span>02 / Review</span><h3>Keep approval human</h3><p>Use Copilot to retrieve, compare, structure, and draft. Leave engineering approval, safety judgment, purchasing authority, and people decisions with the responsible role.</p><strong>Control: named approver</strong></article>
+      <article><span>03 / Evidence</span><h3>Validate the value claim</h3><p>Estimated time savings are hypotheses. Compare task time, quality, rework, and adoption before presenting a business case.</p><strong>Control: before-and-after evidence</strong></article>
+    </div>
+
+    <div class="companion-exit">
+      <div><p class="eyebrow">See the operating model</p><h2>Prompts create value when the adoption system creates repeat behavior.</h2></div>
+      <div><a class="button button--primary" href="/copilot-kit-adoption/">View the case study</a><a class="button button--secondary" href="/copilot-kit-adoption/90-day-playbook/">Open the 90-day playbook</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer shell">
+  <span>KENNY YUKICH / MANUFACTURING COPILOT PROMPT GALLERY</span>
+  <span>18 PROMPTS / 9 DEPARTMENTS / REV 03</span>
+</footer>
+<script src="../../copilot-adoption-kit/app.js" defer></script>
+</body>
+</html>

@@ -218,7 +218,7 @@
   }
 
   if (promptGrid) {
-    fetch("data/prompt-gallery.csv")
+    fetch(promptGrid.getAttribute("data-source") || "data/prompt-gallery.csv")
       .then(function (response) {
         if (!response.ok) throw new Error("Prompt library could not be loaded.");
         return response.text();

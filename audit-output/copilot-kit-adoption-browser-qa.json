@@ -1,0 +1,48 @@
+{
+  "title": "Copilot Adoption in Manufacturing — Kenny Yukich",
+  "fontsReady": "loaded",
+  "desktopOverflow": true,
+  "promptInitialStatus": "18 prompts found · showing 6",
+  "visiblePhasePanels": 1,
+  "duplicateIds": [],
+  "brokenFragments": [],
+  "unlabeledControls": [],
+  "roiInitial": {
+    "cost": "$2,190",
+    "value": "$6,548",
+    "ratio": "3.0x",
+    "breakEven": "10.0 min"
+  },
+  "phaseInteraction": {
+    "selected": "true",
+    "panelVisible": true,
+    "firstPanelHidden": true
+  },
+  "loadMoreInteraction": {
+    "cards": 12,
+    "status": "18 prompts found · showing 12"
+  },
+  "promptCopyInteraction": "Copied",
+  "promptFilter": {
+    "status": "2 prompts found",
+    "cards": 2
+  },
+  "roiInteraction": {
+    "value": "$9,822",
+    "ratio": "4.5x"
+  },
+  "weeklyPromptCopyInteraction": "Copied",
+  "tabletOverflow": true,
+  "mobileOverflow": true,
+  "mobileMenu": {
+    "opened": true,
+    "closed": true
+  },
+  "darkTheme": {
+    "background": "rgb(9, 16, 21)",
+    "text": "rgb(231, 236, 239)",
+    "overflowFree": true
+  },
+  "consoleErrors": [],
+  "networkErrors": []
+}

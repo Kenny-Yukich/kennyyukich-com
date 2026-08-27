@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>90-Day Copilot Adoption Playbook — Kenny Yukich</title>
+<meta name="description" content="A detailed four-phase Microsoft 365 Copilot adoption operating system for cohort planning, task-first training, champions, measurement, and workflow graduation.">
+<meta property="og:title" content="90-Day Copilot Adoption Playbook — Kenny Yukich">
+<meta property="og:description" content="The detailed operating system behind a manufacturing Copilot program that reached 92% active adoption.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://kennyyukich.com/copilot-kit-adoption/90-day-playbook/">
+<meta property="og:image" content="https://kennyyukich.com/img/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/img/portrait.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Archivo+Expanded:wght@600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../copilot-adoption-kit/styles.css">
+<link rel="stylesheet" href="../styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Run a measurable Microsoft 365 Copilot adoption program",
+  "description": "A four-phase operating model for preparing, landing, reinforcing, and institutionalizing Copilot adoption.",
+  "author": {"@type": "Person", "name": "Kenny Yukich", "url": "https://kennyyukich.com"},
+  "url": "https://kennyyukich.com/copilot-kit-adoption/90-day-playbook/",
+  "step": [
+    {"@type": "HowToStep", "name": "Prepare", "text": "Allocate licenses by task fit, define the measurement contract, and clear governance questions."},
+    {"@type": "HowToStep", "name": "Land it", "text": "Train on real work, create first wins, and publish an honest baseline."},
+    {"@type": "HowToStep", "name": "Make it stick", "text": "Use champions, office hours, manufacturing prompts, and deliberate dormant-seat follow-up."},
+    {"@type": "HowToStep", "name": "Institutionalize", "text": "Turn repeated prompts into templates, flows, agents, and owned business capabilities."}
+  ]
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-bar">
+  <div class="site-bar__inner">
+    <a class="brand" href="/">Kenny Yukich</a>
+    <span class="site-bar__divider" aria-hidden="true"></span>
+    <a class="product-name" href="/copilot-kit-adoption/">Copilot Adoption / 90-Day Playbook</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="resource-nav">Menu</button>
+    <nav class="resource-nav" id="resource-nav" aria-label="Playbook navigation">
+      <a href="#phases">Phases</a>
+      <a href="#measurement">Measurement</a>
+      <a href="#community">Training</a>
+      <a href="#files">Files</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero shell" id="top" aria-labelledby="page-title">
+    <div class="hero-plate hero-plate--field hero-plate--resource">
+      <div class="hero-plate__rail" aria-hidden="true">
+        <span>OPERATING SYSTEM / 12 WEEKS</span>
+        <span>FIELD RESOURCE 01</span>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow">Secondary resource / Full detail</p>
+        <h1 id="page-title">90-Day Adoption Playbook</h1>
+        <p class="hero-lede">The detailed operating system behind the case study: cohort planning, task-first training, behavior-based champions, stable measurement, and a deliberate path from prompts to production capability.</p>
+        <div class="hero-actions">
+          <a class="button button--primary" href="#phases">Explore the phases</a>
+          <a class="button button--secondary" href="/copilot-kit-adoption/">Back to case study</a>
+        </div>
+      </div>
+      <aside class="hero-instrument" aria-label="Playbook summary">
+        <div class="instrument-head"><span>Program frame</span><span class="status"><i aria-hidden="true"></i> Field-tested</span></div>
+        <dl class="readouts">
+          <div><dt>Operating phases</dt><dd>4 <small>phases</small></dd></div>
+          <div><dt>Core sessions</dt><dd>3 <small>sessions</small></dd></div>
+          <div><dt>Deep curriculum</dt><dd>10 <small>weeks</small></dd></div>
+          <div><dt>Reporting rhythm</dt><dd>1 <small>weekly signal</small></dd></div>
+        </dl>
+        <p class="instrument-note">Use the sequence as a decision system. Adapt the timing to the cohort, organization, licensing model, and governance environment.</p>
+      </aside>
+    </div>
+    <nav class="module-index module-index--field module-index--compact" aria-label="Playbook sections">
+      <a href="#phases"><span>01</span>Four phases</a>
+      <a href="#measurement"><span>02</span>Measurement contract</a>
+      <a href="#community"><span>03</span>Champions + training</a>
+      <a href="#files"><span>04</span>Working files</a>
+    </nav>
+  </section>
+
+  <section class="module shell" id="phases" aria-labelledby="phases-title">
+    <header class="module-head">
+      <div><span class="module-number">01</span><p class="eyebrow">Sequence before sophistication</p></div>
+      <div><h2 id="phases-title">The four-phase operating system</h2><p>Each phase includes actions, an exit signal, and the failure mode I would watch. Select a phase to inspect its operating details.</p></div>
+    </header>
+
+    <div class="phase-system">
+      <div class="phase-tabs" role="tablist" aria-label="Adoption phases">
+        <button type="button" role="tab" id="phase-tab-0" aria-controls="phase-panel-0" aria-selected="true" data-phase="0"><span class="phase-code">P0</span><strong>Prepare</strong><small>Before launch</small></button>
+        <button type="button" role="tab" id="phase-tab-1" aria-controls="phase-panel-1" aria-selected="false" data-phase="1" tabindex="-1"><span class="phase-code">P1</span><strong>Land it</strong><small>Weeks 1&ndash;4</small></button>
+        <button type="button" role="tab" id="phase-tab-2" aria-controls="phase-panel-2" aria-selected="false" data-phase="2" tabindex="-1"><span class="phase-code">P2</span><strong>Make it stick</strong><small>Weeks 5&ndash;8</small></button>
+        <button type="button" role="tab" id="phase-tab-3" aria-controls="phase-panel-3" aria-selected="false" data-phase="3" tabindex="-1"><span class="phase-code">P3</span><strong>Institutionalize</strong><small>Weeks 9&ndash;12</small></button>
+      </div>
+
+      <div class="phase-panels">
+        <article class="phase-panel" id="phase-panel-0" role="tabpanel" aria-labelledby="phase-tab-0" data-panel="0">
+          <div class="phase-summary"><span>Objective</span><h3>Make the launch measurable before it is visible.</h3><p>Allocate scarce seats by task fit, establish the denominator, capture before-metrics, and settle permissions and acceptable use.</p></div>
+          <ol class="action-list">
+            <li><span>01</span><div><strong>Map recurring work</strong><p>Find tasks with enough frequency and friction to justify a license.</p></div></li>
+            <li><span>02</span><div><strong>Write the contract</strong><p>Name the reporting source, 28-day window, active definition, denominator, and exclusions.</p></div></li>
+            <li><span>03</span><div><strong>Clear governance</strong><p>Explain permissions, logging, retention, acceptable use, and escalation in plain language.</p></div></li>
+          </ol>
+          <div class="phase-proof"><span>Exit signal</span><strong>A named cohort, a written measurement contract, and no unanswered first-week governance question.</strong></div>
+          <div class="phase-failure"><span>Failure mode</span><strong>Assigning every seat by seniority produces a cohort with weak task fit and no honest baseline.</strong></div>
+        </article>
+
+        <article class="phase-panel" id="phase-panel-1" role="tabpanel" aria-labelledby="phase-tab-1" data-panel="1" hidden>
+          <div class="phase-summary"><span>Objective</span><h3>Make the first useful result happen on real work.</h3><p>Launch by department, coach the first attempt, and publish the baseline even when it is unimpressive.</p></div>
+          <ol class="action-list">
+            <li><span>W1</span><div><strong>Start with the job</strong><p>Use the participant's document, meeting, email, or operational decision.</p></div></li>
+            <li><span>W2</span><div><strong>Run the minimum spine</strong><p>Deliver the first focused 30-minute session and schedule the next two.</p></div></li>
+            <li><span>W3</span><div><strong>Publish peer proof</strong><p>Show one specific result, who it helped, and how the next person can repeat it.</p></div></li>
+          </ol>
+          <div class="phase-proof"><span>Exit signal</span><strong>Every participant has one usable result and the program has its first honest weekly report.</strong></div>
+          <div class="phase-failure"><span>Failure mode</span><strong>A polished feature tour creates familiarity without changing a single weekly behavior.</strong></div>
+        </article>
+
+        <article class="phase-panel" id="phase-panel-2" role="tabpanel" aria-labelledby="phase-tab-2" data-panel="2" hidden>
+          <div class="phase-summary"><span>Objective</span><h3>Convert early wins into peer-supported habits.</h3><p>Deepen examples by department, support the passive middle, and treat dormant seats as a coaching signal before a reclaim signal.</p></div>
+          <ol class="action-list">
+            <li><span>05</span><div><strong>Run office hours</strong><p>Specific stuck points now outperform another broad class.</p></div></li>
+            <li><span>06</span><div><strong>Seed the community</strong><p>Use prompt-of-the-week, champion spotlights, and a two-week challenge to convert lurkers.</p></div></li>
+            <li><span>07</span><div><strong>Support before reclaim</strong><p>Check in, coach once, name the task gap, then reallocate deliberately.</p></div></li>
+          </ol>
+          <div class="phase-proof"><span>Exit signal</span><strong>Usage is concentrated around named weekly tasks, and champions are creating peer pull.</strong></div>
+          <div class="phase-failure"><span>Failure mode</span><strong>Choosing champions by enthusiasm alone creates visible advocates who do not change peer behavior.</strong></div>
+        </article>
+
+        <article class="phase-panel" id="phase-panel-3" role="tabpanel" aria-labelledby="phase-tab-3" data-panel="3" hidden>
+          <div class="phase-summary"><span>Objective</span><h3>Graduate useful behavior into business capability.</h3><p>Review what survived, assign ownership, and promote repeated prompts into templates, flows, agents, or applications.</p></div>
+          <ol class="action-list">
+            <li><span>09</span><div><strong>Review what stuck</strong><p>Name the workflows that survived weekly use and retire the ones that did not.</p></div></li>
+            <li><span>10</span><div><strong>Apply the graduation gate</strong><p>Check repetition, shared value, stable data, ownership, and acceptable error cost.</p></div></li>
+            <li><span>11</span><div><strong>Set the cadence</strong><p>Weekly signal report, monthly peer spotlight, quarterly capability review.</p></div></li>
+          </ol>
+          <div class="phase-proof"><span>Exit signal</span><strong>The program has owners, operating rhythms, and an evidence-backed automation backlog.</strong></div>
+          <div class="phase-failure"><span>Failure mode</span><strong>Automating novelty creates brittle systems with no owner, no repeat use, and no credible value case.</strong></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="module shell" id="measurement" aria-labelledby="measurement-title">
+    <header class="module-head">
+      <div><span class="module-number">02</span><p class="eyebrow">Measure behavior, not assignment</p></div>
+      <div><h2 id="measurement-title">The measurement contract</h2><p>The number only means something when the source, window, active definition, denominator, and exclusions remain stable.</p></div>
+    </header>
+
+    <div class="contract-board">
+      <div class="contract-head"><p class="eyebrow">Published definition / Rev 03</p><h3>Use the same rules every week</h3></div>
+      <dl class="contract-list">
+        <div><dt>Source</dt><dd>Viva Insights Copilot reporting.</dd></div>
+        <div><dt>Window</dt><dd>Rolling 28-day activity window.</dd></div>
+        <div><dt>Active</dt><dd>At least one recorded Copilot action during the window.</dd></div>
+        <div><dt>Denominator</dt><dd>The named licensed cohort that has entered onboarding.</dd></div>
+        <div><dt>Exclusions</dt><dd>Assigned-but-not-onboarded seats are tracked separately instead of silently changing the rate.</dd></div>
+        <div><dt>Publication</dt><dd>Organization-level totals only; no user names, prompts, or individual activity.</dd></div>
+      </dl>
+    </div>
+
+    <div class="executive-strip" aria-label="Weekly executive report contents">
+      <div><span>01</span><strong>Adoption</strong><p>Rate, active cohort, and movement.</p></div>
+      <div><span>02</span><strong>Time</strong><p>Task-level evidence, not blanket claims.</p></div>
+      <div><span>03</span><strong>Use cases</strong><p>Named work people repeat.</p></div>
+      <div><span>04</span><strong>Growth</strong><p>Departments gaining or losing momentum.</p></div>
+      <div><span>05</span><strong>Next action</strong><p>One owner, one date, one decision.</p></div>
+    </div>
+
+    <section class="roi-board" aria-labelledby="roi-title">
+      <div class="roi-copy"><p class="eyebrow">Business-case scenario</p><h3 id="roi-title">Make the assumptions inspectable</h3><p>This calculator is a method demo, not a reported company ROI. Replace every input with contracted cost and validated task-level evidence.</p></div>
+      <form class="roi-form" id="roi-form">
+        <label><span>Licensed seats</span><input id="roi-seats" type="number" min="1" step="1" value="73"></label>
+        <label><span>Active rate (%)</span><input id="roi-active" type="number" min="0" max="100" step="1" value="92"></label>
+        <label><span>Monthly cost / seat ($)</span><input id="roi-cost" type="number" min="0" step="0.01" value="30"></label>
+        <label><span>Minutes saved / active user / week</span><input id="roi-minutes" type="number" min="0" step="5" value="30"></label>
+        <label><span>Loaded hourly rate ($)</span><input id="roi-rate" type="number" min="0" step="1" value="45"></label>
+      </form>
+      <div class="roi-results" aria-live="polite">
+        <div><span>Monthly license cost</span><strong id="roi-monthly-cost">$0</strong></div>
+        <div><span>Modeled capacity value</span><strong id="roi-capacity-value">$0</strong></div>
+        <div><span>Modeled benefit / cost</span><strong id="roi-ratio">0.0x</strong></div>
+        <div><span>Break-even minutes / active user / week</span><strong id="roi-break-even">0 min</strong></div>
+      </div>
+      <p class="roi-note">Illustrative scenario only. Time saved is capacity, not automatically cash, and should be validated with before-and-after task evidence.</p>
+    </section>
+  </section>
+
+  <section class="module shell" id="community" aria-labelledby="community-title">
+    <header class="module-head">
+      <div><span class="module-number">03</span><p class="eyebrow">Champions + training</p></div>
+      <div><h2 id="community-title">Turn training into peer proof</h2><p>The loop is training, champions, peer success stories, reusable prompts, and then measurement.</p></div>
+    </header>
+
+    <div class="champion-grid">
+      <article><span>01</span><h3>Identify from behavior</h3><p>Look for repeat use, useful questions, and a willingness to help peers, not launch-day excitement.</p></article>
+      <article><span>02</span><h3>Give a small job</h3><p>Own one department example, office-hour slot, or prompt-library improvement.</p></article>
+      <article><span>03</span><h3>Publish peer proof</h3><p>Show the task, result, guardrail, and how someone else can repeat it.</p></article>
+      <article><span>04</span><h3>Measure community health</h3><p>Watch repeat contributors, unanswered questions, and department coverage.</p></article>
+    </div>
+
+    <div class="community-board">
+      <article class="prompt-of-week">
+        <p class="eyebrow">Prompt of the week / Meetings</p>
+        <h3>Turn this week's meetings into an action register</h3>
+        <blockquote id="weekly-prompt">Review my meetings from this week. Create a table of action items with columns for owner, due date, source meeting, and status. Put anything assigned to me first. Flag any item with no owner or due date. Do not invent missing details.</blockquote>
+        <button class="copy-prompt" type="button" data-copy-target="#weekly-prompt">Copy prompt</button>
+      </article>
+      <div class="community-rhythm">
+        <p class="eyebrow">Community operating rhythm</p>
+        <ol>
+          <li><span>Weekly</span><strong>One prompt tied to real work</strong></li>
+          <li><span>Biweekly</span><strong>Office hours and dormant-seat support</strong></li>
+          <li><span>Monthly</span><strong>Champion spotlight with repeatable proof</strong></li>
+          <li><span>Quarterly</span><strong>Department coverage and capability review</strong></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="training-track training-track--field">
+      <article><span class="track-marker">01</span><p class="eyebrow">Minimum spine / 30 minutes</p><h3>It works on your stuff</h3><p>Trust conversation first, then one live success on the participant's own document, meeting, or email.</p><strong>Output: one usable result</strong></article>
+      <article><span class="track-marker">02</span><p class="eyebrow">Minimum spine / 30 minutes</p><h3>Make it repeatable</h3><p>Iterate, work across files, and save a shortlist tied to recurring weekly work.</p><strong>Output: three repeat prompts</strong></article>
+      <article><span class="track-marker">03</span><p class="eyebrow">Minimum spine / 30 minutes</p><h3>Beyond the chat box</h3><p>Review what stuck and identify prompts that deserve a template, flow, or agent.</p><strong>Output: one system candidate</strong></article>
+    </div>
+
+    <div class="deep-track">
+      <div><span>3 sessions</span><strong>The minimum viable spine</strong></div>
+      <div><span>10 weeks</span><strong>The deeper beginner curriculum</strong></div>
+      <a href="https://github.com/Kenny-Yukich/Copilot-Adoption-Campaign/blob/main/docs/04-training-program.md" target="_blank" rel="noreferrer">Open the full training program</a>
+    </div>
+  </section>
+
+  <section class="module shell" id="files" aria-labelledby="files-title">
+    <header class="module-head">
+      <div><span class="module-number">04</span><p class="eyebrow">Working files</p></div>
+      <div><h2 id="files-title">Put the operating system to work</h2><p>Use the templates directly, inspect the reporting rhythm, or return to the concise case study.</p></div>
+    </header>
+    <div class="download-grid download-grid--focused">
+      <a href="https://github.com/Kenny-Yukich/Copilot-Adoption-Campaign/blob/main/templates/surveys/readiness-survey.md" target="_blank" rel="noreferrer"><span>MD / SURVEY</span><h3>Readiness Survey</h3><p>Find task-fit candidates and capture before-metrics.</p><b>Open file</b></a>
+      <a href="https://github.com/Kenny-Yukich/Copilot-Adoption-Campaign/blob/main/templates/reports/weekly-adoption-report-template.md" target="_blank" rel="noreferrer"><span>MD / REPORT</span><h3>Weekly Executive Report</h3><p>A stable one-page rhythm: result, movement, use case, and action.</p><b>Open report</b></a>
+      <a class="download-grid__featured" href="/copilot-kit-adoption/prompt-gallery/"><span>18 FIELD PROMPTS</span><h3>Manufacturing Prompt Gallery</h3><p>Search and copy field prompts across nine departments.</p><b>Browse gallery</b></a>
+    </div>
+    <div class="companion-exit">
+      <div><p class="eyebrow">Return to the evidence</p><h2>The playbook supports the case study, not the other way around.</h2></div>
+      <div><a class="button button--primary" href="/copilot-kit-adoption/">View the concise case study</a><a class="button button--secondary" href="/Kenny_Yukich_Resume_Aug2026%20(3).docx" download="Kenny-Yukich-Resume.docx">Download resume</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer shell">
+  <span>KENNY YUKICH / 90-DAY COPILOT ADOPTION PLAYBOOK</span>
+  <span>FIELD RESOURCE / REV 03</span>
+</footer>
+<script src="../../copilot-adoption-kit/app.js" defer></script>
+<script src="../app.js" defer></script>
+</body>
+</html>
