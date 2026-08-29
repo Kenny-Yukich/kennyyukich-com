@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kenny Yukich — Field notes from putting AI on a factory floor</title>
+<meta name="description" content="A Microsoft 365 Copilot program at a walking-floor trailer manufacturer, taken from 5 users to 68 — the playbook, the prompts, the agents, and the parts that didn't work. All open.">
+<meta name="color-scheme" content="light dark">
+
+<meta property="og:title" content="Kenny Yukich — Field notes from a factory floor">
+<meta property="og:description" content="What actually happened when I put AI in front of people wearing gloves. Playbook, prompts, and agents — all open.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://kennyyukich.com/v2/">
+<meta property="og:image" content="https://kennyyukich.com/img/web02.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Instrument+Serif:ital@0;1&family=Newsreader:opsz,wght@6..72,300..700&family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap">
+
+<style>
+/* ============================================================
+   TOKENS — every visual decision routes through one of these.
+   The control panel rewrites them live in #tweak-vars below.
+   ============================================================ */
+:root{
+  /* light palette */
+  --paper:#EFE9DD;
+  --surface:#F8F4EC;
+  --ink:#211E19;
+  --muted:#635C50;
+  --accent:#A8641B;
+  --steel:#3D6076;
+  --band:#1C1A16;
+  --band-ink:#EDE6D8;
+  --hair:#CFC6B4;
+
+  /* type */
+  --font-display:"Fraunces","Iowan Old Style",Georgia,serif;
+  --font-body:"Archivo",system-ui,-apple-system,sans-serif;
+  --font-mono:"Space Mono",ui-monospace,SFMono-Regular,monospace;
+  --fs-base:17px;
+  --display-scale:1;
+  --display-weight:600;
+  --display-tracking:-0.02em;
+  --leading:1.65;
+
+  /* layout */
+  --maxw:1120px;
+  --band-pad:104px;
+  --radius:6px;
+  --border-w:1px;
+  --gap:24px;
+
+  /* effects */
+  --grain:0.05;
+  --shadow:0.10;
+  --photo-tone:0.22;
+  --portrait-shape:50% 50% var(--radius) var(--radius) / 38% 38% var(--radius) var(--radius);
+  --ease:cubic-bezier(.22,.68,.28,1);
+}
+
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#15140F;
+    --surface:#1F1D18;
+    --ink:#EDE6D8;
+    --muted:#9A9182;
+    --accent:#D69B45;
+    --steel:#84A8C2;
+    --band:#0E0D0A;
+    --band-ink:#EDE6D8;
+    --hair:#38342C;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#15140F;
+  --surface:#1F1D18;
+  --ink:#EDE6D8;
+  --muted:#9A9182;
+  --accent:#D69B45;
+  --steel:#84A8C2;
+  --band:#0E0D0A;
+  --band-ink:#EDE6D8;
+  --hair:#38342C;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:var(--fs-base);
+  line-height:var(--leading);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+/* paper grain — a fixed overlay so it doesn't scroll with content */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  opacity:var(--grain);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+main{display:flex;flex-direction:column}
+
+a{color:var(--accent);text-decoration:none;text-underline-offset:3px}
+a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible,[contenteditable]:focus-visible{
+  outline:2px solid var(--accent);outline-offset:3px;border-radius:2px;
+}
+
+h1,h2,h3{
+  font-family:var(--font-display);
+  font-weight:var(--display-weight);
+  letter-spacing:var(--display-tracking);
+  text-wrap:balance;
+  margin:0;
+  line-height:1.08;
+}
+p{margin:0}
+
+.skip{
+  position:absolute;left:-9999px;top:0;z-index:99;
+  background:var(--accent);color:#fff;padding:10px 16px;font-weight:600;
+}
+.skip:focus{left:12px;top:12px}
+
+/* ---------- band scaffold: the engineering margin ---------- */
+
+.band{
+  position:relative;
+  padding:var(--band-pad) 0;
+  z-index:2;
+}
+.band--surface{background:var(--surface)}
+/* Dark contexts re-point the whole token set, not just the text colour —
+   otherwise .lede and friends keep the light theme's --muted and vanish. */
+.band--dark,.on-dark{
+  background:var(--band);
+  color:var(--band-ink);
+  --ink:var(--band-ink);
+  --muted:color-mix(in srgb,var(--band-ink) 66%,transparent);
+  --surface:color-mix(in srgb,#fff 5%,transparent);
+  --hair:color-mix(in srgb,var(--band-ink) 18%,transparent);
+}
+
+.band-in{
+  width:min(var(--maxw),100% - 48px);
+  margin-inline:auto;
+  position:relative;
+}
+
+/* the measuring rule down the left edge */
+.rule{
+  position:absolute;
+  left:-30px;top:6px;bottom:6px;
+  width:11px;
+  display:none;
+  border-left:var(--border-w) solid var(--hair);
+  background-image:repeating-linear-gradient(
+    to bottom,
+    var(--hair) 0 1px,
+    transparent 1px 14px
+  );
+  background-size:6px 100%;
+  background-repeat:no-repeat;
+  opacity:.85;
+}
+@media (min-width:1240px){.rule{display:block}}
+
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:11px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--accent);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:22px;
+}
+.eyebrow::after{
+  content:"";
+  flex:1;
+  height:var(--border-w);
+  background:var(--hair);
+}
+.band--dark .eyebrow{color:color-mix(in srgb,var(--accent) 80%,#fff)}
+
+.h2{font-size:clamp(30px,calc(3.4vw * var(--display-scale)),46px)}
+.muted{color:var(--muted)}
+.lede{font-size:clamp(18px,2vw,21px);line-height:1.55;max-width:62ch;color:var(--muted)}
+.prose p{max-width:66ch;margin-bottom:1.05em}
+.prose p:last-child{margin-bottom:0}
+.prose em{font-family:var(--font-display);font-style:italic}
+
+/* ---------- hero ---------- */
+
+#hero{padding-top:clamp(48px,7vw,88px)}
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.25fr .75fr;
+  gap:clamp(32px,5vw,72px);
+  align-items:center;
+}
+@media (max-width:880px){.hero-grid{grid-template-columns:1fr}}
+
+.hero-h1{
+  font-size:clamp(38px,calc(6.2vw * var(--display-scale)),72px);
+  margin-bottom:26px;
+}
+.hero-h1 em{
+  font-style:italic;
+  color:var(--accent);
+  font-variation-settings:"SOFT" 40,"WONK" 1;
+}
+
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{
+  font-family:var(--font-body);
+  font-size:14px;font-weight:600;
+  letter-spacing:.01em;
+  padding:13px 22px;
+  border-radius:var(--radius);
+  border:var(--border-w) solid transparent;
+  cursor:pointer;
+  transition:transform .18s var(--ease),background .18s var(--ease);
+}
+.btn:hover{transform:translateY(-1px);text-decoration:none}
+.btn--primary{background:var(--accent);color:#FFF9F0}
+.btn--ghost{background:transparent;color:var(--ink);border-color:var(--hair)}
+.btn--ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+.portrait-frame{position:relative;isolation:isolate}
+.portrait{
+  width:100%;
+  /* height:auto is required — the height attribute is a presentational
+     hint, and aspect-ratio is ignored unless height resolves to auto */
+  height:auto;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  object-position:center 14%;
+  border-radius:var(--portrait-shape);
+  display:block;
+  filter:saturate(calc(1 - var(--photo-tone) * 1.15)) contrast(1.03);
+  box-shadow:0 24px 60px rgba(0,0,0,calc(var(--shadow) * 1.6));
+}
+/* warm wash — pulls the yellow bokeh toward the brass accent so the
+   photo sits in the palette instead of fighting it */
+.portrait-frame::after{
+  content:"";
+  position:absolute;inset:0;
+  border-radius:var(--portrait-shape);
+  background:var(--accent);
+  opacity:var(--photo-tone);
+  mix-blend-mode:soft-light;
+  pointer-events:none;
+}
+.portrait-frame::before{
+  content:"";
+  position:absolute;
+  inset:18px -18px -18px 18px;
+  border:var(--border-w) solid var(--accent);
+  border-radius:var(--portrait-shape);
+  opacity:.45;
+  z-index:-1;
+}
+
+.award{
+  margin-top:28px;
+  display:flex;gap:12px;align-items:flex-start;
+  padding:14px 16px;
+  border-left:3px solid var(--steel);
+  background:color-mix(in srgb,var(--steel) 8%,transparent);
+  border-radius:0 var(--radius) var(--radius) 0;
+  max-width:52ch;
+}
+.award strong{font-size:13px;letter-spacing:.01em;display:block}
+.award span{font-size:12.5px;color:var(--muted);font-family:var(--font-mono)}
+
+/* ---------- numbers ---------- */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:var(--gap);
+}
+@media (max-width:820px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{
+  padding:26px;
+  border:var(--border-w) solid var(--hair);
+  border-radius:var(--radius);
+  background:var(--paper);
+}
+.band--dark .stat{background:color-mix(in srgb,#fff 4%,transparent)}
+.stat b{
+  display:block;
+  font-family:var(--font-display);
+  font-size:clamp(38px,calc(4.4vw * var(--display-scale)),54px);
+  font-weight:var(--display-weight);
+  line-height:1;
+  color:var(--accent);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:var(--display-tracking);
+}
+.stat span{display:block;margin-top:12px;font-size:13.5px;line-height:1.45;color:var(--muted)}
+
+/* ---------- take these ---------- */
+
+.split{
+  display:grid;
+  grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);
+  gap:clamp(28px,5vw,64px);
+  align-items:start;
+}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
+
+.cards{display:grid;gap:var(--gap)}
+.card{
+  padding:28px;
+  border:var(--border-w) solid var(--hair);
+  border-radius:var(--radius);
+  background:var(--surface);
+  transition:transform .2s var(--ease),border-color .2s var(--ease);
+}
+.band--surface .card{background:var(--paper)}
+.card:hover{transform:translateY(-2px);border-color:var(--accent)}
+.card h3{font-size:21px;margin-bottom:10px}
+.card p{font-size:15.5px;color:var(--muted);line-height:1.6;max-width:58ch}
+.card .cost{
+  display:block;margin-top:16px;padding-top:14px;
+  border-top:var(--border-w) solid var(--hair);
+  font-family:var(--font-mono);font-size:12px;
+  color:var(--steel);letter-spacing:.02em;
+}
+.card .cost b{color:var(--ink);font-weight:400}
+.card-link{display:inline-block;margin-top:14px;font-size:14px;font-weight:600}
+
+/* ---------- method (a real sequence, so it's numbered) ---------- */
+
+.steps{
+  display:grid;gap:2px;
+  border-radius:var(--radius);
+  overflow:hidden;
+  /* a dark block sitting inside a light band — flip the tokens or the
+     headings inherit light-theme ink and disappear */
+  --ink:var(--band-ink);
+  --muted:color-mix(in srgb,var(--band-ink) 66%,transparent);
+  --hair:color-mix(in srgb,var(--band-ink) 18%,transparent);
+  color:var(--band-ink);
+  background:color-mix(in srgb,var(--band-ink) 15%,var(--band));
+  border:var(--border-w) solid var(--band);
+}
+.step{
+  background:var(--band);
+  padding:30px 32px;
+  display:grid;
+  grid-template-columns:64px 1fr;
+  gap:24px;
+  align-items:baseline;
+}
+.step-n{
+  font-family:var(--font-mono);
+  font-size:13px;
+  color:var(--accent);
+  letter-spacing:.08em;
+}
+.step h3{font-size:20px;margin-bottom:8px}
+.step p{font-size:15px;color:color-mix(in srgb,var(--band-ink) 62%,transparent);max-width:62ch;line-height:1.6}
+@media (max-width:620px){.step{grid-template-columns:1fr;gap:10px}}
+
+.contract{
+  margin-top:var(--gap);
+  padding:24px 28px;
+  border:var(--border-w) dashed color-mix(in srgb,var(--band-ink) 30%,transparent);
+  border-radius:var(--radius);
+}
+.contract h3{font-size:18px;margin-bottom:8px;color:var(--accent)}
+.contract p{font-size:15px;color:color-mix(in srgb,var(--band-ink) 66%,transparent);max-width:70ch}
+
+/* ---------- notes ---------- */
+
+.notes{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap)}
+@media (max-width:900px){.notes{grid-template-columns:1fr}}
+.note{
+  display:flex;flex-direction:column;
+  padding:26px;
+  border:var(--border-w) solid var(--hair);
+  border-radius:var(--radius);
+  background:var(--surface);
+  transition:border-color .2s var(--ease);
+}
+.band--surface .note{background:var(--paper)}
+.note:hover{border-color:var(--accent)}
+.note-meta{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);
+  display:flex;gap:8px;align-items:center;margin-bottom:14px;
+}
+.note-meta .dot{width:3px;height:3px;border-radius:50%;background:var(--muted)}
+.tag-draft{color:var(--steel);border:var(--border-w) solid var(--steel);padding:1px 6px;border-radius:99px;letter-spacing:.06em}
+.note h3{font-size:20px;margin-bottom:10px}
+.note p{font-size:15px;color:var(--muted);line-height:1.6;flex:1}
+
+/* ---------- field reports ---------- */
+
+.reports{columns:3;column-gap:var(--gap)}
+@media (max-width:980px){.reports{columns:2}}
+@media (max-width:640px){.reports{columns:1}}
+.report{
+  break-inside:avoid;
+  margin:0 0 var(--gap);
+  padding:24px;
+  border:var(--border-w) solid var(--hair);
+  border-radius:var(--radius);
+  background:var(--paper);
+}
+.report .src{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent);display:block;margin-bottom:12px;
+}
+.report p{font-size:15px;line-height:1.62}
+.report figcaption{margin-top:14px;font-size:12.5px;color:var(--muted);font-family:var(--font-mono)}
+
+/* ---------- contact ---------- */
+
+#contact .band-in{text-align:left}
+.mail{
+  font-family:var(--font-display);
+  font-size:clamp(26px,calc(3.6vw * var(--display-scale)),42px);
+  font-weight:var(--display-weight);
+  letter-spacing:var(--display-tracking);
+  display:inline-block;margin:24px 0 28px;
+  border-bottom:2px solid var(--accent);
+}
+.mail:hover{text-decoration:none}
+.elsewhere{display:flex;flex-wrap:wrap;gap:20px;font-size:14px;font-weight:600}
+.colophon{
+  margin-top:56px;padding-top:24px;
+  border-top:var(--border-w) solid var(--hair);
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);
+  display:flex;flex-wrap:wrap;gap:8px 20px;
+}
+
+/* ---------- editing affordance ---------- */
+
+body.editing [data-k]{
+  outline:1px dashed color-mix(in srgb,var(--steel) 55%,transparent);
+  outline-offset:4px;
+  border-radius:2px;
+  cursor:text;
+}
+body.editing [data-k]:hover{outline-style:solid}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none !important;animation:none !important}
+}
+
+/* ============================================================
+   CONTROL PANEL — deliberately does NOT use the page tokens,
+   so it stays legible no matter what you do to the palette.
+   ============================================================ */
+#panel-toggle{
+  position:fixed;right:20px;bottom:20px;z-index:60;
+  width:52px;height:52px;border-radius:50%;
+  background:#17161C;color:#F4C46A;
+  border:1px solid #33313C;
+  display:grid;place-items:center;
+  cursor:pointer;
+  box-shadow:0 8px 28px rgba(0,0,0,.35);
+  font-size:20px;line-height:1;
+}
+#panel-toggle:hover{background:#211F28}
+
+#panel{
+  position:fixed;top:0;right:0;bottom:0;z-index:70;
+  width:min(384px,100vw);
+  background:#131218;
+  color:#E8E5EE;
+  font-family:var(--font-body);
+  font-size:13px;
+  border-left:1px solid #2C2A35;
+  display:flex;flex-direction:column;
+  transform:translateX(101%);
+  transition:transform .32s var(--ease);
+  box-shadow:-12px 0 40px rgba(0,0,0,.4);
+}
+#panel.open{transform:none}
+@media (prefers-reduced-motion:reduce){#panel{transition:none}}
+
+.p-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 18px;border-bottom:1px solid #2C2A35;flex:none;
+}
+.p-head h2{font-family:var(--font-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#F4C46A}
+.p-close{background:none;border:none;color:#8C8798;font-size:22px;cursor:pointer;line-height:1;padding:4px 8px}
+.p-close:hover{color:#E8E5EE}
+
+.p-body{overflow-y:auto;padding:6px 18px 24px;flex:1}
+
+.p-group{border-bottom:1px solid #23222B;padding:14px 0}
+.p-group:last-child{border-bottom:none}
+.p-group > summary{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:#9A94A8;cursor:pointer;
+  list-style:none;display:flex;justify-content:space-between;align-items:center;
+  padding:4px 0;
+}
+.p-group > summary::-webkit-details-marker{display:none}
+.p-group > summary::after{content:"+";color:#5E5870;font-size:14px}
+.p-group[open] > summary::after{content:"–"}
+.p-group[open] > summary{color:#F4C46A;margin-bottom:12px}
+
+.row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;margin-bottom:11px}
+.row label{color:#B4AFC0;font-size:12.5px}
+.row output{font-family:var(--font-mono);font-size:11px;color:#6F6982;min-width:46px;text-align:right}
+.row input[type="range"]{grid-column:1/-1;width:100%;accent-color:#F4C46A;height:20px}
+.row input[type="color"]{
+  width:44px;height:26px;padding:0;border:1px solid #34323F;
+  border-radius:4px;background:none;cursor:pointer;
+}
+.row select{
+  grid-column:1/-1;width:100%;
+  background:#1D1B24;color:#E8E5EE;border:1px solid #34323F;
+  border-radius:4px;padding:7px 8px;font-family:inherit;font-size:12.5px;
+}
+.row input[type="checkbox"]{width:16px;height:16px;accent-color:#F4C46A;cursor:pointer}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.chip{
+  background:#1D1B24;color:#C9C4D6;border:1px solid #34323F;
+  border-radius:99px;padding:6px 12px;font-size:12px;cursor:pointer;
+}
+.chip:hover{border-color:#F4C46A;color:#F4C46A}
+.chip.on{background:#F4C46A;color:#17161C;border-color:#F4C46A;font-weight:600}
+
+.sec-row{
+  display:grid;grid-template-columns:auto 1fr auto auto;gap:8px;
+  align-items:center;padding:6px 0;
+}
+.sec-row span{color:#B4AFC0;font-size:12.5px}
+.mini{
+  background:#1D1B24;border:1px solid #34323F;color:#9A94A8;
+  border-radius:4px;width:24px;height:24px;cursor:pointer;font-size:12px;line-height:1;
+}
+.mini:hover{color:#F4C46A;border-color:#F4C46A}
+
+.p-foot{padding:14px 18px;border-top:1px solid #2C2A35;display:grid;gap:8px;flex:none}
+.p-btn{
+  background:#1D1B24;color:#E8E5EE;border:1px solid #34323F;
+  border-radius:5px;padding:10px;cursor:pointer;font-family:inherit;font-size:12.5px;font-weight:600;
+}
+.p-btn:hover{border-color:#F4C46A;color:#F4C46A}
+.p-btn--go{background:#F4C46A;color:#17161C;border-color:#F4C46A}
+.p-btn--go:hover{background:#F7D083;color:#17161C}
+.p-note{color:#6F6982;font-size:11.5px;line-height:1.5;margin-top:2px}
+
+@media print{#panel,#panel-toggle{display:none}}
+</style>
+<style id="tweak-vars"></style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="band" id="hero" data-sec="hero" data-label="Hero">
+    <div class="band-in">
+      <span class="rule" aria-hidden="true"></span>
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow" data-k="hero-eyebrow">Walking-floor trailer manufacturing · Madras, Oregon</p>
+          <h1 class="hero-h1" data-k="hero-h1">I put AI on a factory floor. <em>Here's what actually happened.</em></h1>
+          <p class="lede" data-k="hero-lede">Not a pilot. Not a demo. A Microsoft 365 Copilot program at a mid-size manufacturer, taken from five users to sixty-eight — including the parts that didn't work. Everything I built along the way is open, and you can take it.</p>
+          <div class="hero-actions">
+            <a class="btn btn--primary" href="#notes">Read the field notes</a>
+            <a class="btn btn--ghost" href="#artifacts">Take the toolkit</a>
+          </div>
+          <div class="award">
+            <div>
+              <strong data-k="award-t">2nd place · Best Microsoft Copilot Integration</strong>
+              <span data-k="award-s">VSLive! Microsoft AI Hackathon 2026 · Microsoft HQ · solo entry</span>
+            </div>
+          </div>
+        </div>
+        <div class="portrait-frame">
+          <img class="portrait" src="img/portrait.jpg" srcset="img/portrait.jpg 760w, img/portrait@2x.jpg 1520w" sizes="(max-width:880px) 100vw, 34vw" width="760" height="1013" alt="Kenny Yukich" loading="eager" decoding="async">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NUMBERS ============ -->
+  <section class="band band--surface" id="numbers" data-sec="numbers" data-label="Numbers">
+    <div class="band-in">
+      <span class="rule" aria-hidden="true"></span>
+      <h2 class="eyebrow" data-k="num-eyebrow">What the program actually did</h2>
+      <div class="stats">
+        <div class="stat"><b>68</b><span data-k="stat-1">Active Copilot users, up from five at the start of the year</span></div>
+        <div class="stat"><b>92%</b><span data-k="stat-2">Of the adoption target, reached</span></div>
+        <div class="stat"><b>33</b><span data-k="stat-3">Prompts published, across eleven departments</span></div>
+        <div class="stat"><b>9</b><span data-k="stat-4">Agents and tools shipped into production use</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THESIS ============ -->
+  <section class="band" id="thesis" data-sec="thesis" data-label="The last mile">
+    <div class="band-in">
+      <span class="rule" aria-hidden="true"></span>
+      <div class="split">
+        <div>
+          <p class="eyebrow">The argument</p>
+          <h2 class="h2" data-k="thesis-h2">The last mile is about four feet long.</h2>
+        </div>
+        <div class="prose">
+          <p data-k="th-1">Most AI programs don't fail at the model. They fail about four feet from the person who was supposed to use them.</p>
+          <p data-k="th-2">The demo lands. Leadership is impressed. Licenses get bought. And then the thing sits there, because a tool that saves eleven minutes is worthless to someone who doesn't have a spare eleven minutes to learn it.</p>
+          <p data-k="th-3">I work at a company that builds walking-floor trailers. Most of my colleagues aren't at a desk — they're on a floor, in gloves, in front of a machine that's already running. That constraint turned out to be the most useful design input I've ever had. When your user genuinely cannot be bothered, <em>technically capable</em> stops being a category worth talking about. The only question that survives is whether this gives someone their time back today.</p>
+          <p data-k="th-4">Everything I've published since comes out of answering that question badly a few times before answering it well. The 90-day playbook exists because my first rollout had no baseline and I couldn't prove anything to anyone. The prompt gallery is sorted by department instead of by app because sorting by app is how you build a library nobody opens. The measurement contract exists because someone asked me whether it was working and I didn't have an honest answer.</p>
+          <p data-k="th-5">None of it is proprietary and none of it is theoretical. It ran in a real plant, with real people who had every reason to ignore it. If you're doing the same work somewhere else — a plant, a warehouse, a hospital, a field crew — take any of it. I'd rather you skip the parts I got wrong.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TAKE THESE ============ -->
+  <section class="band band--surface" id="artifacts" data-sec="artifacts" data-label="Take these">
+    <div class="band-in">
+      <span class="rule" aria-hidden="true"></span>
+      <div class="split">
+        <div>
+          <p class="eyebrow">Open artifacts</p>
+          <h2 class="h2" data-k="art-h2">Take these. They're already paid for.</h2>
+          <p class="lede" style="margin-top:18px" data-k="art-lede">Everything below ran somewhere real before it was published. Each one lists what it costs you to adopt, because that's the number nobody puts on the box.</p>
+        </div>
+        <div class="cards">
+
+          <article class="card">
+            <h3 data-k="a1-h">90-Day Adoption Playbook</h3>
+            <p data-k="a1-p">A four-phase operating system for turning licenses into habits: instrument before you launch, get one real result on real work, convert early wins into peer proof, then graduate behavior into capability.</p>
+            <span class="cost">COST TO ADOPT — <b data-k="a1-c">Two hours to read. One person who owns the weekly report.</b></span>
+            <a class="card-link" href="/copilot-adoption-kit/">Open the playbook →</a>
+          </article>
+
+          <article class="card">
+            <h3 data-k="a2-h">Manufacturing Prompt Gallery</h3>
+            <p data-k="a2-p">Thirty-three prompts across eleven departments — customer service, quality, purchasing, maintenance, engineering — each tagged with the app it runs in, a difficulty level, and an honest time-saved estimate rather than a flattering one.</p>
+            <span class="cost">COST TO ADOPT — <b data-k="a2-c">Nothing. Sorted by job, not by tool, so people find their own.</b></span>
+            <a class="card-link" href="/copilot-adoption-kit/#prompts">Browse the gallery →</a>
+          </article>
+
+          <article class="card">
+            <h3 data-k="a3-h">The measurement contract</h3>
+            <p data-k="a3-p">The weekly executive report and the readiness survey I actually send. Same rules every week, and the assumptions written down somewhere anyone can inspect them — which is the only reason the numbers survived contact with a skeptical finance team.</p>
+            <span class="cost">COST TO ADOPT — <b data-k="a3-c">Twenty minutes a week, forever. That's the whole point.</b></span>
+            <a class="card-link" href="/copilot-adoption-kit/#measurement">See the reporting →</a>
+          </article>
+
+          <article class="card">
+            <h3 data-k="a4-h">The agents, with their source</h3>
+            <p data-k="a4-p">A Safety Assistant that answers grounded questions without exposing what it shouldn't. A Kaizen coach that turns a floor observation into a review-ready card. A Power Automate build guide that refuses to invent connector names. An AP invoice agent whose three-way matching is deterministic, not vibes.</p>
+            <span class="cost">COST TO ADOPT — <b data-k="a4-c">Read the README before you trust the matching logic.</b></span>
+            <a class="card-link" href="https://github.com/Kenny-Yukich">All repositories on GitHub →</a>
+          </article>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ METHOD ============ -->
+  <section class="band" id="method" data-sec="method" data-label="The method">
+    <div class="band-in">
+      <span class="rule" aria-hidden="true"></span>
+      <p class="eyebrow">The operating system</p>
+      <h2 class="h2" style="margin-bottom:32px" data-k="m-h2">Four phases, in this order, for a reason.</h2>
+      <div class="steps">
+        <div class="step">
+          <span class="step-n">PHASE 01</span>
+          <div>
+            <h3 data-k="m1-h">Make the launch measurable before it's visible.</h3>
+            <p data-k="m1-p">Baseline first. If you can't say what normal looked like before you arrived, every result you report afterward is an opinion, and it will be treated as one.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-n">PHASE 02</span>
+          <div>
+            <h3 data-k="m2-h">Make the first useful result happen on real work.</h3>
+            <p data-k="m2-p">Not a sandbox, not sample data. Someone's actual backlog, on the day they're actually behind. The first result is the only one that buys you a second conversation.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-n">PHASE 03</span>
+          <div>
+            <h3 data-k="m3-h">Convert early wins into peer-supported habits.</h3>
+            <p data-k="m3-p">Adoption spreads sideways, not down. Find the behavior in the data, give that person a small visible job, and let the proof come from a colleague instead of from IT.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-n">PHASE 04</span>
+          <div>
+            <h3 data-k="m4-h">Graduate useful behavior into business capability.</h3>
+            <p data-k="m4-p">A habit that lives in one person's head is a single point of failure. This is where the prompt becomes an agent, and the agent becomes something the department owns.</p>
+          </div>
+        </div>
+        <div class="contract">
+          <h3 data-k="mc-h">Running alongside all four: the measurement contract</h3>
+          <p data-k="mc-p">Same rules every week. Assumptions published where anyone can inspect them. Nothing restated favorably once the numbers are in. It's less exciting than the phases and it's the part that keeps the program alive.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FIELD NOTES ============ -->
+  <section class="band band--surface" id="notes" data-sec="notes" data-label="Field notes">
+    <div class="band-in">
+      <span class="rule" aria-hidden="true"></span>
+      <p class="eyebrow">Field notes</p>
+      <h2 class="h2" style="margin-bottom:14px" data-k="n-h2">Written down while it was still fresh.</h2>
+      <p class="lede" style="margin-bottom:36px" data-k="n-lede">Drafts, mostly. I'd rather publish the version with the mistakes still in it than wait for the version that makes me look better.</p>
+      <div class="notes">
+
+        <article class="note">
+          <div class="note-meta"><span class="tag-draft">Draft</span><span class="dot"></span><span>8 min</span></div>
+          <h3 data-k="n1-h">The last mile is four feet long</h3>
+          <p data-k="n1-p">Why the gap that kills AI programs isn't between the model and the workflow — it's between the workflow and a person holding something in both hands. What that constraint does to every design decision downstream.</p>
+        </article>
+
+        <article class="note">
+          <div class="note-meta"><span class="tag-draft">Draft</span><span class="dot"></span><span>11 min</span></div>
+          <h3 data-k="n2-h">Five to sixty-eight: what the number doesn't tell you</h3>
+          <p data-k="n2-p">The honest version of the headline metric. Which growth was earned, which was a reorg that would have happened anyway, and the two months in the middle where the line went flat and I couldn't explain why.</p>
+        </article>
+
+        <article class="note">
+          <div class="note-meta"><span class="tag-draft">Draft</span><span class="dot"></span><span>9 min</span></div>
+          <h3 data-k="n3-h">What I'd do differently in the first thirty days</h3>
+          <p data-k="n3-p">I launched before I had a baseline, trained on features instead of on jobs, and let the pilot group self-select into the people who least needed help. Three mistakes, and what each one cost.</p>
+        </article>
+
+        <article class="note">
+          <div class="note-meta"><span class="tag-draft">Draft</span><span class="dot"></span><span>5 min</span></div>
+          <h3 data-k="n4-h">Sort the prompt library by department, not by app</h3>
+          <p data-k="n4-p">A short craft note. Organizing by tool is how vendors think; organizing by job is how the person searching thinks. The gallery got used roughly four times as much after the re-sort.</p>
+        </article>
+
+        <article class="note">
+          <div class="note-meta"><span class="tag-draft">Draft</span><span class="dot"></span><span>7 min</span></div>
+          <h3 data-k="n5-h">Building an agent for a job that didn't exist yet</h3>
+          <p data-k="n5-p">I built a personal retrieval agent to get up to speed faster in a manufacturing role. Told as method rather than biography: what I indexed, what I got wrong about chunking, and why the useful part was the questions it forced me to write down.</p>
+        </article>
+
+        <article class="note">
+          <div class="note-meta"><span class="tag-draft">Draft</span><span class="dot"></span><span>6 min</span></div>
+          <h3 data-k="n6-h">Nobody on the floor wants a chatbot</h3>
+          <p data-k="n6-p">They want an answer without having to interrupt a colleague. Reframing the whole category around that one sentence changed what I built and how I introduced it.</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FIELD REPORTS ============ -->
+  <section class="band" id="reports" data-sec="reports" data-label="Field reports">
+    <div class="band-in">
+      <span class="rule" aria-hidden="true"></span>
+      <p class="eyebrow">From the people using it</p>
+      <h2 class="h2" style="margin-bottom:36px" data-k="r-h2">Unedited, and not all of it flattering.</h2>
+      <div class="reports">
+        <figure class="report"><span class="src">Kaizen Coach</span><p data-k="r1">"I worked with your Kaizen Coach for hours yesterday fixing the parameters for EU MRP and I am very pleased with the final result."</p><figcaption>Subsidiary Support Lead</figcaption></figure>
+        <figure class="report"><span class="src">Serial Plate Generator</span><p data-k="r2">"We would type out one plate at a time, place 28 plates on one sheet, and print it twice. With the new sized plates, serial number generator, and script, we probably save well over an hour a week."</p><figcaption>Engraving Department Lead</figcaption></figure>
+        <figure class="report"><span class="src">Safety Assistant</span><p data-k="r3">"The Safety Assistant helped me find the information I needed without interrupting someone else. That's a big win during a busy day."</p><figcaption>Plant Manager</figcaption></figure>
+        <figure class="report"><span class="src">Bunker Lookup Agent</span><p data-k="r4">"What used to take several phone calls and a lot of searching now takes a few minutes. The Bunker Lookup Agent has made customer support much faster."</p><figcaption>Drafter / Technical Writer</figcaption></figure>
+        <figure class="report"><span class="src">CertTracker</span><p data-k="r5">"Before CertTracker, keeping track of certifications was mostly manual. Now I can find what I need almost instantly."</p><figcaption>Safety Coordinator</figcaption></figure>
+        <figure class="report"><span class="src">Copilot Training</span><p data-k="r6">"The training focused on practical examples instead of AI buzzwords, which made it easy to apply to my job."</p><figcaption>Parts Department Lead</figcaption></figure>
+        <figure class="report"><span class="src">Adoption Program</span><p data-k="r7">"Kenny's approach focused on solving actual business problems rather than implementing technology for technology's sake."</p><figcaption>Manufacturing / Management Consultant</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="band band--dark" id="contact" data-sec="contact" data-label="Contact">
+    <div class="band-in">
+      <span class="rule" aria-hidden="true"></span>
+      <p class="eyebrow">Compare notes</p>
+      <h2 class="h2" data-k="c-h2">Doing this same work somewhere else?</h2>
+      <p class="lede" style="margin-top:16px" data-k="c-lede">I'd rather trade notes than pitch you. If you're rolling out Copilot, building agents people actually use, or trying to get a floor to adopt anything at all — tell me what's not working.</p>
+      <a class="mail" href="mailto:kenny@kennyyukich.com">kenny@kennyyukich.com</a>
+      <div class="elsewhere">
+        <a href="https://www.linkedin.com/in/kenny-yukich-4092521a8/">LinkedIn</a>
+        <a href="https://github.com/Kenny-Yukich">GitHub</a>
+        <a href="/">The other version of this site</a>
+      </div>
+      <div class="colophon">
+        <span>Madras, Oregon</span><span>Built by hand, no framework</span><span>Rev B</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ CONTROL PANEL ============ -->
+<button id="panel-toggle" type="button" aria-label="Open design controls" aria-expanded="false" aria-controls="panel">✦</button>
+
+<aside id="panel" aria-label="Design controls" aria-hidden="true">
+  <div class="p-head">
+    <h2>Design controls</h2>
+    <button class="p-close" type="button" aria-label="Close design controls">×</button>
+  </div>
+  <div class="p-body" id="p-body"></div>
+  <div class="p-foot">
+    <button class="p-btn p-btn--go" type="button" data-act="copy-html">Copy this page as HTML</button>
+    <button class="p-btn" type="button" data-act="copy-css">Copy CSS variables</button>
+    <button class="p-btn" type="button" data-act="reset">Reset everything</button>
+    <p class="p-note">Changes save in this browser only. Copy the HTML when you want to keep them.</p>
+  </div>
+</aside>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- schema: one place that defines every control ---------- */
+
+var FONTS = [
+  ['"Fraunces","Iowan Old Style",Georgia,serif','Fraunces (serif)'],
+  ['"Instrument Serif",Georgia,serif','Instrument Serif'],
+  ['"Newsreader",Georgia,serif','Newsreader'],
+  ['"Bricolage Grotesque",system-ui,sans-serif','Bricolage Grotesque'],
+  ['"Archivo",system-ui,sans-serif','Archivo (sans)'],
+  ['"Space Mono",ui-monospace,monospace','Space Mono']
+];
+
+var COLOR_KEYS = [
+  ['paper','Page background'],
+  ['surface','Raised surface'],
+  ['ink','Text'],
+  ['muted','Secondary text'],
+  ['accent','Accent'],
+  ['steel','Secondary accent'],
+  ['band','Dark band'],
+  ['band-ink','Dark band text'],
+  ['hair','Hairlines']
+];
+
+var LIGHT = {paper:'#EFE9DD',surface:'#F8F4EC',ink:'#211E19',muted:'#635C50',
+             accent:'#A8641B',steel:'#3D6076',band:'#1C1A16','band-ink':'#EDE6D8',hair:'#CFC6B4'};
+var DARK  = {paper:'#15140F',surface:'#1F1D18',ink:'#EDE6D8',muted:'#9A9182',
+             accent:'#D69B45',steel:'#84A8C2',band:'#0E0D0A','band-ink':'#EDE6D8',hair:'#38342C'};
+
+var PRESETS = {
+  'Foundry':   {light:LIGHT, dark:DARK, type:{'font-display':FONTS[0][0]}},
+  'Newsprint': {light:{paper:'#F4F2EC',surface:'#FFFFFF',ink:'#1A1A18',muted:'#5C5A54',accent:'#8C2F1E',steel:'#4A4A46',band:'#1A1A18','band-ink':'#F4F2EC',hair:'#D6D3CA'},
+                dark:{paper:'#131311',surface:'#1C1C19',ink:'#F0EEE8',muted:'#93908A',accent:'#D96A50',steel:'#A8A5A0',band:'#0B0B0A','band-ink':'#F0EEE8',hair:'#33322E'},
+                type:{'font-display':FONTS[2][0]}},
+  'Blueprint': {light:{paper:'#E8EDF1',surface:'#F6F8FA',ink:'#152530',muted:'#54697A',accent:'#1E5F9E',steel:'#7A6234',band:'#0F2029','band-ink':'#E3EBF0',hair:'#C2CFD9'},
+                dark:{paper:'#0C161C',surface:'#152229',ink:'#DEE9F0',muted:'#8AA0B0',accent:'#5FA8E8',steel:'#D4B678',band:'#070E12','band-ink':'#DEE9F0',hair:'#26353F'},
+                type:{'font-display':FONTS[3][0]}},
+  'Graphite':  {light:{paper:'#E9E7E4',surface:'#F5F4F2',ink:'#1B1B1A',muted:'#5D5C58',accent:'#8A6D3B',steel:'#4C5A5E',band:'#171716','band-ink':'#E9E7E4',hair:'#CBC8C3'},
+                dark:{paper:'#131312',surface:'#1D1D1B',ink:'#E7E5E1',muted:'#95928C',accent:'#C4A268',steel:'#8FA3A8',band:'#0A0A09','band-ink':'#E7E5E1',hair:'#302F2C'},
+                type:{'font-display':FONTS[1][0]}}
+};
+
+var SECTIONS = ['hero','numbers','thesis','artifacts','method','notes','reports','contact'];
+
+var DEFAULTS = {
+  preset:'Foundry',
+  mode:'auto',
+  light:copy(LIGHT),
+  dark:copy(DARK),
+  type:{
+    'font-display':FONTS[0][0],
+    'font-body':FONTS[4][0],
+    'font-mono':FONTS[5][0],
+    'fs-base':17,
+    'display-scale':1,
+    'display-weight':600,
+    'display-tracking':-2,
+    'leading':1.65
+  },
+  layout:{'maxw':1120,'band-pad':104,'radius':6,'border-w':1,'gap':24},
+  fx:{'grain':5,'shadow':10,'photo-tone':22,'portrait':'arch'},
+  order:SECTIONS.slice(),
+  hidden:{},
+  text:{}
+};
+
+var SHAPES = {
+  arch:'50% 50% var(--radius) var(--radius) / 38% 38% var(--radius) var(--radius)',
+  rounded:'var(--radius)',
+  square:'0',
+  pill:'999px',
+  circle:'50%'
+};
+
+var KEY = 'ky-v2-tweaks';
+var state = load();
+var editing = false;
+
+function copy(o){return JSON.parse(JSON.stringify(o));}
+
+function load(){
+  var s = copy(DEFAULTS);
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw){
+      var saved = JSON.parse(raw);
+      ['light','dark','type','layout','fx','hidden','text'].forEach(function(g){
+        if(saved[g]) for(var k in saved[g]) s[g][k] = saved[g][k];
+      });
+      if(saved.mode) s.mode = saved.mode;
+      if(saved.preset) s.preset = saved.preset;
+      if(Array.isArray(saved.order) && saved.order.length === SECTIONS.length) s.order = saved.order;
+    }
+  }catch(e){}
+  return s;
+}
+
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(state)); }catch(e){}
+}
+
+/* ---------- apply ---------- */
+
+var mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+function activePalette(){
+  if(state.mode === 'light') return state.light;
+  if(state.mode === 'dark')  return state.dark;
+  return mq.matches ? state.dark : state.light;
+}
+
+function buildVars(pal){
+  var out = [];
+  COLOR_KEYS.forEach(function(c){ out.push('--' + c[0] + ':' + pal[c[0]]); });
+  out.push('--font-display:' + state.type['font-display']);
+  out.push('--font-body:' + state.type['font-body']);
+  out.push('--font-mono:' + state.type['font-mono']);
+  out.push('--fs-base:' + state.type['fs-base'] + 'px');
+  out.push('--display-scale:' + state.type['display-scale']);
+  out.push('--display-weight:' + state.type['display-weight']);
+  out.push('--display-tracking:' + (state.type['display-tracking']/100) + 'em');
+  out.push('--leading:' + state.type['leading']);
+  out.push('--maxw:' + state.layout['maxw'] + 'px');
+  out.push('--band-pad:' + state.layout['band-pad'] + 'px');
+  out.push('--radius:' + state.layout['radius'] + 'px');
+  out.push('--border-w:' + state.layout['border-w'] + 'px');
+  out.push('--gap:' + state.layout['gap'] + 'px');
+  out.push('--grain:' + (state.fx['grain']/100));
+  out.push('--shadow:' + (state.fx['shadow']/100));
+  out.push('--photo-tone:' + (state.fx['photo-tone']/100));
+  out.push('--portrait-shape:' + SHAPES[state.fx['portrait']]);
+  return out.join(';\n  ');
+}
+
+function apply(){
+  var css = ':root{\n  ' + buildVars(activePalette()) + ';\n}';
+  document.getElementById('tweak-vars').textContent = css;
+
+  if(state.mode === 'auto') document.documentElement.removeAttribute('data-theme');
+  else document.documentElement.setAttribute('data-theme', state.mode);
+
+  state.order.forEach(function(id, i){
+    var el = document.getElementById(id);
+    if(!el) return;
+    el.style.order = i;
+    el.style.display = state.hidden[id] ? 'none' : '';
+  });
+
+  for(var k in state.text){
+    var t = document.querySelector('[data-k="' + k + '"]');
+    if(t && t.innerHTML !== state.text[k]) t.innerHTML = state.text[k];
+  }
+}
+
+if(mq.addEventListener) mq.addEventListener('change', function(){ if(state.mode==='auto') apply(); });
+
+/* ---------- panel construction ---------- */
+
+var body = document.getElementById('p-body');
+
+function el(tag, cls, html){
+  var n = document.createElement(tag);
+  if(cls) n.className = cls;
+  if(html != null) n.innerHTML = html;
+  return n;
+}
+
+function group(name, open){
+  var d = el('details','p-group');
+  if(open) d.open = true;
+  d.appendChild(el('summary', null, name));
+  body.appendChild(d);
+  return d;
+}
+
+function slider(parent, label, group_, key, min, max, step, suffix){
+  var row = el('div','row');
+  row.appendChild(el('label', null, label));
+  var out = el('output', null, state[group_][key] + (suffix||''));
+  row.appendChild(out);
+  var i = document.createElement('input');
+  i.type='range'; i.min=min; i.max=max; i.step=step; i.value=state[group_][key];
+  i.setAttribute('aria-label', label);
+  i.addEventListener('input', function(){
+    state[group_][key] = parseFloat(i.value);
+    out.textContent = i.value + (suffix||'');
+    apply(); save();
+  });
+  row.appendChild(i);
+  parent.appendChild(row);
+}
+
+function select(parent, label, group_, key, opts){
+  var row = el('div','row');
+  row.appendChild(el('label', null, label));
+  row.appendChild(el('output'));
+  var s = document.createElement('select');
+  s.setAttribute('aria-label', label);
+  opts.forEach(function(o){
+    var op = document.createElement('option');
+    op.value = o[0]; op.textContent = o[1];
+    if(state[group_][key] === o[0]) op.selected = true;
+    s.appendChild(op);
+  });
+  s.addEventListener('change', function(){
+    state[group_][key] = s.value; apply(); save();
+  });
+  row.appendChild(s);
+  parent.appendChild(row);
+}
+
+/* --- presets --- */
+var gPre = group('Presets', true);
+var chips = el('div','chips');
+Object.keys(PRESETS).forEach(function(name){
+  var b = el('button','chip' + (state.preset===name?' on':''), name);
+  b.type = 'button';
+  b.addEventListener('click', function(){
+    var p = PRESETS[name];
+    state.preset = name;
+    state.light = copy(p.light);
+    state.dark = copy(p.dark);
+    if(p.type) for(var k in p.type) state.type[k] = p.type[k];
+    chips.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('on'); });
+    b.classList.add('on');
+    apply(); save(); rebuild();
+  });
+  chips.appendChild(b);
+});
+gPre.appendChild(chips);
+
+var modeRow = el('div','chips');
+[['auto','Auto'],['light','Light'],['dark','Dark']].forEach(function(m){
+  var b = el('button','chip' + (state.mode===m[0]?' on':''), m[1]);
+  b.type='button';
+  b.addEventListener('click', function(){
+    state.mode = m[0];
+    modeRow.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('on'); });
+    b.classList.add('on');
+    apply(); save(); rebuild();
+  });
+  modeRow.appendChild(b);
+});
+gPre.appendChild(el('div','p-note','Theme mode — the colour pickers below edit whichever theme is showing.'));
+gPre.appendChild(modeRow);
+
+/* --- colours --- */
+var gCol;
+function buildColors(){
+  gCol.querySelectorAll('.row, .p-note').forEach(function(n){ n.remove(); });
+  var which = (state.mode === 'dark' || (state.mode === 'auto' && mq.matches)) ? 'dark' : 'light';
+  gCol.appendChild(el('div','p-note','Editing the <b>' + which + '</b> palette.'));
+  COLOR_KEYS.forEach(function(c){
+    var row = el('div','row');
+    row.appendChild(el('label', null, c[1]));
+    var i = document.createElement('input');
+    i.type='color'; i.value = state[which][c[0]];
+    i.setAttribute('aria-label', c[1]);
+    i.addEventListener('input', function(){
+      state[which][c[0]] = i.value; apply(); save();
+    });
+    row.appendChild(i);
+    gCol.appendChild(row);
+  });
+}
+
+/* --- rebuildable groups --- */
+function rebuild(){ buildColors(); }
+
+gCol = group('Colour', true);
+buildColors();
+
+var gType = group('Typography');
+select(gType,'Display face','type','font-display',FONTS);
+select(gType,'Body face','type','font-body',FONTS);
+select(gType,'Label / data face','type','font-mono',FONTS);
+slider(gType,'Base text size','type','fs-base',14,22,1,'px');
+slider(gType,'Headline scale','type','display-scale',0.7,1.6,0.05,'×');
+slider(gType,'Headline weight','type','display-weight',300,900,50,'');
+slider(gType,'Headline tracking','type','display-tracking',-6,4,0.5,'/100em');
+slider(gType,'Line height','type','leading',1.3,2,0.05,'');
+
+var gLay = group('Layout');
+slider(gLay,'Content width','layout','maxw',720,1440,20,'px');
+slider(gLay,'Section spacing','layout','band-pad',40,180,4,'px');
+slider(gLay,'Corner radius','layout','radius',0,28,1,'px');
+slider(gLay,'Border weight','layout','border-w',0,4,1,'px');
+slider(gLay,'Grid gap','layout','gap',8,56,2,'px');
+
+var gFx = group('Texture & shape');
+slider(gFx,'Paper grain','fx','grain',0,20,1,'%');
+slider(gFx,'Shadow depth','fx','shadow',0,40,1,'%');
+slider(gFx,'Photo warm wash','fx','photo-tone',0,60,1,'%');
+select(gFx,'Portrait shape','fx','portrait',[['arch','Arch'],['rounded','Rounded'],['square','Square'],['pill','Pill'],['circle','Circle']]);
+
+/* --- sections --- */
+var gSec = group('Sections');
+function buildSections(){
+  gSec.querySelectorAll('.sec-row').forEach(function(n){ n.remove(); });
+  state.order.forEach(function(id, idx){
+    var node = document.getElementById(id);
+    if(!node) return;
+    var row = el('div','sec-row');
+
+    var cb = document.createElement('input');
+    cb.type='checkbox'; cb.checked = !state.hidden[id];
+    cb.setAttribute('aria-label','Show ' + node.dataset.label);
+    cb.addEventListener('change', function(){
+      if(cb.checked) delete state.hidden[id]; else state.hidden[id] = 1;
+      apply(); save();
+    });
+    row.appendChild(cb);
+    row.appendChild(el('span', null, node.dataset.label));
+
+    var up = el('button','mini','↑'); up.type='button';
+    up.setAttribute('aria-label','Move ' + node.dataset.label + ' up');
+    up.addEventListener('click', function(){ move(idx,-1); });
+    var dn = el('button','mini','↓'); dn.type='button';
+    dn.setAttribute('aria-label','Move ' + node.dataset.label + ' down');
+    dn.addEventListener('click', function(){ move(idx,1); });
+    row.appendChild(up); row.appendChild(dn);
+
+    gSec.appendChild(row);
+  });
+}
+function move(i, d){
+  var j = i + d;
+  if(j < 0 || j >= state.order.length) return;
+  var t = state.order[i];
+  state.order[i] = state.order[j];
+  state.order[j] = t;
+  apply(); save(); buildSections();
+}
+buildSections();
+
+/* --- text editing --- */
+var gTxt = group('Copy');
+var txtRow = el('div','row');
+txtRow.appendChild(el('label',null,'Edit text directly on the page'));
+var txtCb = document.createElement('input');
+txtCb.type='checkbox';
+txtCb.setAttribute('aria-label','Edit text directly on the page');
+txtCb.addEventListener('change', function(){
+  editing = txtCb.checked;
+  document.body.classList.toggle('editing', editing);
+  document.querySelectorAll('[data-k]').forEach(function(n){
+    if(editing) n.setAttribute('contenteditable','true');
+    else n.removeAttribute('contenteditable');
+  });
+});
+txtRow.appendChild(txtCb);
+gTxt.appendChild(txtRow);
+gTxt.appendChild(el('div','p-note','Turn this on, then click any headline or paragraph and type. Edits save as you go.'));
+
+document.addEventListener('blur', function(e){
+  var t = e.target;
+  if(t && t.nodeType === 1 && t.hasAttribute && t.hasAttribute('data-k') && editing){
+    state.text[t.getAttribute('data-k')] = t.innerHTML;
+    save();
+  }
+}, true);
+
+/* ---------- open / close ---------- */
+
+var panel = document.getElementById('panel');
+var toggle = document.getElementById('panel-toggle');
+
+function setOpen(on){
+  panel.classList.toggle('open', on);
+  panel.setAttribute('aria-hidden', on ? 'false' : 'true');
+  toggle.setAttribute('aria-expanded', on ? 'true' : 'false');
+  if(on) rebuild();
+}
+toggle.addEventListener('click', function(){ setOpen(!panel.classList.contains('open')); });
+panel.querySelector('.p-close').addEventListener('click', function(){ setOpen(false); toggle.focus(); });
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape' && panel.classList.contains('open')){ setOpen(false); toggle.focus(); }
+});
+
+/* ---------- export ---------- */
+
+function flash(btn, msg){
+  var old = btn.textContent;
+  btn.textContent = msg;
+  setTimeout(function(){ btn.textContent = old; }, 1600);
+}
+
+function toClipboard(text, btn, ok){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){ flash(btn, ok); },
+      function(){ flash(btn,'Copy failed — check permissions'); });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); flash(btn, ok); }
+    catch(err){ flash(btn,'Copy failed'); }
+    ta.remove();
+  }
+}
+
+document.querySelector('.p-foot').addEventListener('click', function(e){
+  var btn = e.target.closest('[data-act]');
+  if(!btn) return;
+  var act = btn.getAttribute('data-act');
+
+  if(act === 'copy-css'){
+    var css = ':root{\n  ' + buildVars(state.light) + ';\n}\n\n' +
+              '@media (prefers-color-scheme:dark){\n  :root:not([data-theme="light"]){\n  ' +
+              buildVars(state.dark) + ';\n  }\n}';
+    toClipboard(css, btn, 'CSS copied');
+  }
+
+  if(act === 'copy-html'){
+    var clone = document.documentElement.cloneNode(true);
+    ['panel','panel-toggle'].forEach(function(id){
+      var n = clone.querySelector('#' + id); if(n) n.remove();
+    });
+    var s = clone.querySelector('script'); if(s) s.remove();
+    clone.querySelectorAll('[contenteditable]').forEach(function(n){ n.removeAttribute('contenteditable'); });
+    clone.querySelectorAll('section[data-sec]').forEach(function(n){
+      if(state.hidden[n.id]) n.remove();
+    });
+    var tv = clone.querySelector('#tweak-vars');
+    if(tv) tv.textContent = ':root{\n  ' + buildVars(state.light) + ';\n}\n' +
+      '@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){\n  ' + buildVars(state.dark) + ';\n}}';
+    toClipboard('<!DOCTYPE html>\n' + clone.outerHTML, btn, 'HTML copied');
+  }
+
+  if(act === 'reset'){
+    try{ localStorage.removeItem(KEY); }catch(err){}
+    location.reload();
+  }
+});
+
+apply();
+})();
+</script>
+
+</body>
+</html>
